@@ -1,0 +1,479 @@
+------------------------------TEST 1------------------------------
+INPUT:
+make TYPE=EXT
+./vote -6
+./vote 7
+./vote 6 2
+./vote 6 -3
+./vote -3 3
+./vote 7 3
+./vote 6 3 -1
+./vote 6 3 0
+./vote -1 -1 5
+./vote -1 -1 -1
+./vote 1 1 1 1
+
+EXPLANATION:
+Tests that check the error handling of the input. All tests should return an error message. Since all 5 solutions share the same main method, it's sufficient to run these on only one of the solutions
+
+OUTPUT:
+bkravche@linux024:~/Desktop/A5$ make TYPE=EXT
+make: Nothing to be done for `all'.
+bkravche@linux024:~/Desktop/A5$ ./vote -6
+Usage: ./vote Voters (> 0 & V mod G = 0, default 6)  Group (> 0 & odd, default 3)  Seed (> 0)
+bkravche@linux024:~/Desktop/A5$ ./vote 7
+Usage: ./vote Voters (> 0 & V mod G = 0, default 6)  Group (> 0 & odd, default 3)  Seed (> 0)
+bkravche@linux024:~/Desktop/A5$ ./vote 6 2
+Usage: ./vote Voters (> 0 & V mod G = 0, default 6)  Group (> 0 & odd, default 3)  Seed (> 0)
+bkravche@linux024:~/Desktop/A5$ ./vote 6 -3
+Usage: ./vote Voters (> 0 & V mod G = 0, default 6)  Group (> 0 & odd, default 3)  Seed (> 0)
+bkravche@linux024:~/Desktop/A5$ ./vote -3 3
+Usage: ./vote Voters (> 0 & V mod G = 0, default 6)  Group (> 0 & odd, default 3)  Seed (> 0)
+bkravche@linux024:~/Desktop/A5$ ./vote 7 3
+Usage: ./vote Voters (> 0 & V mod G = 0, default 6)  Group (> 0 & odd, default 3)  Seed (> 0)
+bkravche@linux024:~/Desktop/A5$ ./vote 6 3 -1
+Usage: ./vote Voters (> 0 & V mod G = 0, default 6)  Group (> 0 & odd, default 3)  Seed (> 0)
+bkravche@linux024:~/Desktop/A5$ ./vote 6 3 0
+Usage: ./vote Voters (> 0 & V mod G = 0, default 6)  Group (> 0 & odd, default 3)  Seed (> 0)
+bkravche@linux024:~/Desktop/A5$ ./vote -1 -1 5
+Usage: ./vote Voters (> 0 & V mod G = 0, default 6)  Group (> 0 & odd, default 3)  Seed (> 0)
+bkravche@linux024:~/Desktop/A5$ ./vote -1 -1 -1
+Usage: ./vote Voters (> 0 & V mod G = 0, default 6)  Group (> 0 & odd, default 3)  Seed (> 0)
+bkravche@linux024:~/Desktop/A5$ ./vote 1 1 1 1
+Usage: ./vote Voters (> 0 & V mod G = 0, default 6)  Group (> 0 & odd, default 3)  Seed (> 0)
+bkravche@linux024:~/Desktop/A5$ exit
+exit
+
+ANALYSIS:
+All tests gave the usage message, therefore all tests passed.
+
+------------------------------TEST 2------------------------------
+INPUT:
+make TYPE=EXT
+./vote
+./vote 6 3
+
+./vote 6 3 1 > a
+./voteEXT_64 6 3 1 > b
+diff a b
+
+./vote 1 1 1 > a
+./voteEXT_64 1 1 1 > b
+diff a b
+
+./vote 3 1 1 > a
+./voteEXT_64 3 1 1 > b
+diff a b
+
+./vote 3 3 1 > a
+./voteEXT_64 3 3 1 > b
+diff a b
+
+./vote 99 3 9999 > a
+./voteEXT_64 99 3 9999 > b
+diff a b
+
+EXPLANATION:
+Tests the external scheduling solution. The first 2 tests are for general output correctness, the rest compare my output to the given output for various group and voter sizes. The first 2 tests should return correct output, the rest should have correct diff results
+
+OUTPUT:
+
+bkravche@linux024:~/Desktop/A5$ make TYPE=EXT
+make: Nothing to be done for `all'.
+bkravche@linux024:~/Desktop/A5$ ./vote
+Voter0	Voter1	Voter2	Voter3	Voter4	Voter5
+=======	=======	=======	=======	=======	=======
+S	S	S	S	S	S
+					V 1
+V 1					B 1
+B 2	V 1
+	C
+...	F 1	...	...	...	...
+U 1
+F 1	...	...	...	...	...
+					U 0
+...	...	...	...	...	F 1
+		V 1
+		B 1		V 0
+			V 1	B 2
+			C
+...	...	...	F 1	...	...
+				U 1
+...	...	...	...	F 1	...
+		U 0
+...	...	F 1	...	...	...
+=================
+All tours started
+bkravche@linux024:~/Desktop/A5$ ./vote 6 3
+Voter0	Voter1	Voter2	Voter3	Voter4	Voter5
+=======	=======	=======	=======	=======	=======
+S	S	S	S	S	S
+					V 0
+				V 0	B 1
+			V 1	B 2
+			C
+...	...	...	F 0	...	...
+				U 1
+...	...	...	...	F 0	...
+					U 0
+...	...	...	...	...	F 0
+	V 1
+V 0	B 1
+B 2		V 1
+		C
+...	...	F 1	...	...	...
+U 1
+F 1	...	...	...	...	...
+	U 0
+...	F 1	...	...	...	...
+=================
+All tours started
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 6 3 1 > a
+bkravche@linux024:~/Desktop/A5$ ./voteEXT_64 6 3 1 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 1 1 1 > a
+bkravche@linux024:~/Desktop/A5$ ./voteEXT_64 1 1 1 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 3 1 1 > a
+bkravche@linux024:~/Desktop/A5$ ./voteEXT_64 3 1 1 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 3 3 1 > a
+bkravche@linux024:~/Desktop/A5$ ./voteEXT_64 3 3 1 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 99 3 9999 > a
+bkravche@linux024:~/Desktop/A5$ ./voteEXT_64 99 3 9999 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ exit
+exit
+
+ANALYSIS:
+The first 2 tests gave expected output, the rest had correct diffs. Therefore the tests passed
+
+------------------------------TEST 3------------------------------
+INPUT:
+make TYPE=INT
+./vote
+./vote 6 3
+
+./vote 6 3 1 > a
+./voteEXT_64 6 3 1 > b
+diff a b
+
+./vote 1 1 1 > a
+./voteEXT_64 1 1 1 > b
+diff a b
+
+./vote 3 1 1 > a
+./voteEXT_64 3 1 1 > b
+diff a b
+
+./vote 3 3 1 > a
+./voteEXT_64 3 3 1 > b
+diff a b
+
+./vote 99 3 9999 > a
+./voteEXT_64 99 3 9999 > b
+diff a b
+
+EXPLANATION:
+Tests the internal scheduling solution. The first 2 tests are for general output correctness, the rest compare my output to the given output for various group and voter sizes. The first 2 tests should return correct output, the rest should have correct diff results
+
+OUTPUT:
+
+bkravche@linux024:~/Desktop/A5$ make TYPE=INT
+make: Nothing to be done for `all'.
+bkravche@linux024:~/Desktop/A5$ ./vote
+Voter0	Voter1	Voter2	Voter3	Voter4	Voter5
+=======	=======	=======	=======	=======	=======
+S	S	S	S	S	S
+V 0
+B 1	V 0
+	B 2		V 0
+			C
+...	...	...	F 0	...	...
+	U 1
+...	F 0	...	...	...	...
+U 0
+F 0	...	...	...	...	...
+		V 1
+		B 1		V 0
+				B 2	V 1
+					C
+...	...	...	...	...	F 1
+				U 1
+...	...	...	...	F 1	...
+		U 0
+...	...	F 1	...	...	...
+=================
+All tours started
+bkravche@linux024:~/Desktop/A5$ ./vote 6 3
+Voter0	Voter1	Voter2	Voter3	Voter4	Voter5
+=======	=======	=======	=======	=======	=======
+S	S
+	V 1
+	B 1	S	S
+			V 0
+			B 2	S	S
+					V 0
+					C
+...	...	...	...	...	F 0
+			U 1
+...	...	...	F 0	...	...
+	U 0
+...	F 0	...	...	...	...
+		V 0
+V 1		B 1
+B 2				V 1
+				C
+...	...	...	...	F 1	...
+U 1
+F 1	...	...	...	...	...
+		U 0
+...	...	F 1	...	...	...
+=================
+All tours started
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 6 3 1 > a
+bkravche@linux024:~/Desktop/A5$ ./voteEXT_64 6 3 1 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 1 1 1 > a
+bkravche@linux024:~/Desktop/A5$ ./voteEXT_64 1 1 1 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 3 1 1 > a
+bkravche@linux024:~/Desktop/A5$ ./voteEXT_64 3 1 1 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 3 3 1 > a
+bkravche@linux024:~/Desktop/A5$ ./voteEXT_64 3 3 1 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 99 3 9999 > a
+bkravche@linux024:~/Desktop/A5$ ./voteEXT_64 99 3 9999 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ exit
+exit
+
+ANALYSIS:
+The first 2 tests gave expected output, the rest had correct diffs. Therefore the tests passed
+
+------------------------------TEST 4------------------------------
+INPUT:
+make TYPE=TASK
+./vote
+./vote 6 3
+
+./vote 6 3 1 > a
+./voteTASK_64 6 3 1 > b
+diff a b
+
+./vote 1 1 1 > a
+./voteTASK_64 1 1 1 > b
+diff a b
+
+./vote 3 1 1 > a
+./voteTASK_64 3 1 1 > b
+diff a b
+
+./vote 3 3 1 > a
+./voteTASK_64 3 3 1 > b
+diff a b
+
+./vote 99 3 9999 > a
+./voteTASK_64 99 3 9999 > b
+diff a b
+
+EXPLANATION:
+Tests the task solution. The first 2 tests are for general output correctness, the rest compare my output to the given output for various group and voter sizes. The first 2 tests should return correct output, the rest should have correct diff results
+
+OUTPUT:
+
+bkravche@linux024:~/Desktop/A5$ make TYPE=TASK
+make: Nothing to be done for `all'.
+bkravche@linux024:~/Desktop/A5$ ./vote
+Voter0	Voter1	Voter2	Voter3	Voter4	Voter5
+=======	=======	=======	=======	=======	=======
+S	S	S	S	S	S
+					V 0
+				V 1	B 1
+V 1				B 2
+B 3
+C					U 2
+...	...	...	...	...	F 1
+				U 1
+...	...	...	...	F 1	...
+U 0
+F 1	...	...	...	...	...
+	V 1
+	B 1	V 1
+		B 2	V 0
+			B 3
+	U 2		C
+...	F 1	...	...	...	...
+		U 1
+...	...	F 1	...	...	...
+			U 0
+...	...	...	F 1	...	...
+=================
+All tours started
+bkravche@linux024:~/Desktop/A5$ ./vote 6 3
+Voter0	Voter1	Voter2	Voter3	Voter4	Voter5
+=======	=======	=======	=======	=======	=======
+S	S	S	S	S	S
+V 0
+B 1					V 1
+			V 0		B 2
+			B 3
+U 2			C
+F 0	...	...	...	...	...
+					U 1
+...	...	...	...	...	F 0
+			U 0
+...	...	...	F 0	...	...
+	V 0
+	B 1	V 1
+		B 2		V 0
+				B 3
+	U 2			C
+...	F 0	...	...	...	...
+		U 1
+...	...	F 0	...	...	...
+				U 0
+...	...	...	...	F 0	...
+=================
+All tours started
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 6 3 1 > a
+bkravche@linux024:~/Desktop/A5$ ./voteTASK_64 6 3 1 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 1 1 1 > a
+bkravche@linux024:~/Desktop/A5$ ./voteTASK_64 1 1 1 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 3 1 1 > a
+bkravche@linux024:~/Desktop/A5$ ./voteTASK_64 3 1 1 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 3 3 1 > a
+bkravche@linux024:~/Desktop/A5$ ./voteTASK_64 3 3 1 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ 
+bkravche@linux024:~/Desktop/A5$ ./vote 99 3 9999 > a
+bkravche@linux024:~/Desktop/A5$ ./voteTASK_64 99 3 9999 > b
+bkravche@linux024:~/Desktop/A5$ diff a b
+bkravche@linux024:~/Desktop/A5$ exit
+exit
+
+ANALYSIS:
+The first 2 tests gave expected output, the rest had correct diffs. Therefore the tests passed
+
+------------------------------TEST 5------------------------------
+INPUT:
+make TYPE=AUTO
+./vote 1 1 
+./vote 6 3 
+
+EXPLANATION:
+Tests the auto solution. My output does not match the given output; I print out the finished tasks in FIFO order rather than LIFO, these tests should give correct output at stated by the problem conditions
+
+OUTPUT:
+
+bkravche@linux024:~/Desktop/A5$ make TYPE=AUTO
+make: Nothing to be done for `all'.
+bkravche@linux024:~/Desktop/A5$ ./vote 1 1 
+Voter0
+=======
+S
+V 0
+C
+F 0
+=================
+All tours started
+bkravche@linux024:~/Desktop/A5$ ./vote 6 3 
+Voter0	Voter1	Voter2	Voter3	Voter4	Voter5
+=======	=======	=======	=======	=======	=======
+S	S	S	S	S	S
+			V 0
+			B 1		V 1
+V 1					B 2
+C
+F 1	...	...	...	...	...
+			U 1
+...	...	...	F 1	...	...
+					U 0
+...	...	...	...	...	F 1
+		V 1
+	V 0	B 1
+	B 2			V 0
+				C
+...	...	...	...	F 0	...
+		U 1
+...	...	F 0	...	...	...
+	U 0
+...	F 0	...	...	...	...
+=================
+All tours started
+bkravche@linux024:~/Desktop/A5$ exit
+exit
+
+ANALYSIS:
+The output is correct according to the problem statement, therefore the tests passed
+
+------------------------------TEST 6------------------------------
+INPUT:
+make TYPE=LOCK
+./vote 1 1 
+./vote 6 3 
+
+EXPLANATION:
+Tests the auto solution. My output does not match the given output - the scheduling order does not exactly match. These tests should give correct output at stated by the problem conditions
+
+OUTPUT:
+
+bkravche@linux024:~/Desktop/A5$ make TYPE=LOCK
+make: Nothing to be done for `all'.
+bkravche@linux024:~/Desktop/A5$ ./vote 1 1 
+Voter0
+=======
+S
+V 0
+C
+F 0
+=================
+All tours started
+bkravche@linux024:~/Desktop/A5$ ./vote 6 3 
+Voter0	Voter1	Voter2	Voter3	Voter4	Voter5
+=======	=======	=======	=======	=======	=======
+S	S	S	S	S	S
+					V 0
+	V 0				B 1
+	B 2	V 1
+		C
+...	...	F 0	...	...	...
+	U 1
+...	F 0	...	...	...	...
+					U 0
+...	...	...	...	...	F 0
+V 1
+B 1				V 0
+			V 0	B 2
+			C
+...	...	...	F 0	...	...
+				U 1
+...	...	...	...	F 0	...
+U 0
+F 0	...	...	...	...	...
+=================
+All tours started
+bkravche@linux024:~/Desktop/A5$ exit
+exit
+
+ANALYSIS:
+The output is correct according to the problem statement, therefore the tests passed

@@ -1,0 +1,15 @@
+How input is generated:
+
+For a test size n, a vector of size 3n is generated and filled with values from 0 to 3n-1. From this vector, 3 values are picked and deleted from 3 random indexes. 1/2 of the time, these 3 values become a vertical line, 1/2 of the time these 3 values become a horizontal line. This is repeated n times to generate n lines. So, generated output has n/2 vertical and n/2 horizontal lines.
+
+Results(in seconds)
+
+Input Size(n)	Divide And Conquer	Brute Force
+5000		0.17			0.35
+10000		0.37			1.38
+50000		2.28			34.46
+100000		4.85			137.22
+200000		10.40			550.01
+
+These experimental results agree with my theoretical analysis, as the divide and conquer algorithm runs much faster then the brute force solution for very large n
+		

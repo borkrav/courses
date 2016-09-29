@@ -1,0 +1,20 @@
+= Conditional jump or move depends on uninitialised value(s)
+=    at 0x8049F40: aiplaygame (game_final.c:275)
+=    by 0x804D8CE: startgame (game_final.c:1132)
+=    by 0x804D9F0: main (game_final.c:1178)
+=  Uninitialised value was created by a stack allocation
+=    at 0x8049A7E: aiplaygame (game_final.c:204)
+= Conditional jump or move depends on uninitialised value(s)
+=    at 0x804A0A1: aiplaygame (game_final.c:293)
+=    by 0x804D8CE: startgame (game_final.c:1132)
+=    by 0x804D9F0: main (game_final.c:1178)
+=  Uninitialised value was created by a stack allocation
+=    at 0x8049A7E: aiplaygame (game_final.c:204)
+HEAP SUMMARY:
+==30821==     in use at exit: 0 bytes in 0 blocks
+==30821==   total heap usage: 1 allocs, 1 frees, 352 bytes allocated
+==30821== 
+==30821== All heap blocks were freed -- no leaks are possible
+==30821== 
+==30821== For counts of detected and suppressed errors, rerun with: -v
+==30821== ERROR SUMMARY: 160 errors from 2 contexts (suppressed: 13 from 8)

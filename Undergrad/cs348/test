@@ -1,0 +1,29 @@
+(select distinct professor.pnum, professor.pname, professor.office, professor.dept \
+from professor, schedule, class \
+where professor.pnum = class.pnum \
+and class.cnum = schedule.cnum \
+and class.term=schedule.term \
+and class.section = schedule.section \
+and not exists (select * from mark \
+where schedule.cnum = mark.cnum \
+and schedule.term = mark.term \
+and schedule.section = mark.section)) \
+except \
+(select distinct professor.pnum, professor.pname, professor.office, professor.dept \
+from professor, class, schedule a, schedule b \
+where professor.pnum = class.pnum \
+and class.cnum=a.cnum \
+and class.cnum=b.cnum \
+and class.term=a.term \
+and class.term = b.term \
+and class.section=a.section \
+and class.section=b.section \
+and (a.day = 'Monday' and a.time < '12:00' and b.day='Friday' and b.time > '12:00') \
+and not exists (select * from mark \
+where a.cnum = mark.cnum \
+and a.term = mark.term \
+and a.section = mark.section \
+and b.cnum = mark.cnum \
+and b.term = mark.term \
+and b.section = mark.section)) \
+order by dept,pname

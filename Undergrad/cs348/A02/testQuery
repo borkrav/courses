@@ -1,0 +1,11 @@
+select d.pubid from ((select pubid, year from proceedings) union (select pubid, year from journal) union (select pubid, year from book)) c \
+right join \
+(select a.pubid, b.firstAuthor from (select pubid from publication where pubid in \
+(select pubid from author, wrote where author.name = 'Peter Bumbulis' and author.aid = wrote.aid)) a, \
+(select author.name as firstAuthor, pubid from author, wrote where aorder = '1' and author.aid = wrote.aid) b where a.pubid = b.pubid) d \
+on c.pubid = d.pubid order by d.firstAuthor, c.year
+
+
+
+
+(select appearsin as pubid from (select pubid from publication where pubid in (select pubid from author, wrote where author.name = 'Peter Bumbulis' and author.aid = wrote.aid)) e, (select appearsin, pubid from article) f where e.pubid = f.pubid) union (select pubid from publication where pubid in (select pubid from author, wrote where author.name = 'Peter Bumbulis' and author.aid = wrote.aid))

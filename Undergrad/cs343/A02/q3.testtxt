@@ -1,0 +1,92 @@
+------------------------------TEST 1------------------------------
+
+INPUT:
+./searcher
+./searcher emptyV emptyK
+./searcher oneV emptyK
+./searcher emptyV oneK
+./searcher oneV oneK
+./searcher permTest
+./seracher oneV oneV oneV
+
+emptyV and emptyK are empty files
+permTest is an empty file with no permissions
+
+oneV:
+1 test
+
+oneK:
+1
+
+EXPLANATION:
+General input edge case tests. Everything in q3main.cc is tested
+
+TEST:
+	-note, searcherOriginal is the solution executable
+
+Script started on Mon 04 Feb 2013 06:55:09 PM EST
+bkravche@linux024:~/cs343/A02$ ./searcher
+Usage: ./searcher multiset-file [ searchkeys-file ]
+bkravche@linux024:~/cs343/A02$ ./searcher emptyV emptyK &> o1
+bkravche@linux024:~/cs343/A02$ ./searcheOrigina2
+bkravche@linux024:~/cs343/A02$ diff o1 o2
+bkravche@linux024:~/cs343/A02$ ./searcher oneV emptyK &> o1
+bkravche@linux024:~/cs343/A02$ ./searcherOriginal oneV emptyK &> o2
+bkravche@linux024:~/cs343/A02$ diff o1 o2
+bkravche@linux024:~/cs343/A02$ ./searcher emptyV oneK &> o1
+bkravche@linux024:~/cs343/A02$ ./searcherOriginal emptyV oneK &> 02
+bkravche@linux024:~/cs343/A02$ diff o1 02
+bkravche@linux024:~/cs343/A02$ ./searcher oneV oneK &> o1
+bkravche@linux024:~/cs343/A02$ ./searcherOriginal oneV oneK &> o2
+bkravche@linux024:~/cs343/A02$ diff o1 o2
+bkravche@linux024:~/cs343/A02$ ./searcher permTest 
+Error! Could not open multiset file "permTest"
+bkravche@linux024:~/cs343/A02$ ./searcher oneV oneV oneV 
+Usage: ./searcher multiset-file [ searchkeys-file ]
+bkravche@linux024:~/cs343/A02$ exit
+
+RESULTS:
+All output matches the sample solution
+
+
+------------------------------TEST 2------------------------------
+
+INPUT:
+./searcher complexTest complexKeys
+
+complexTest:
+1                 one
+7 7 deadly sins
+3 test
+4                 four
+5       five
+6six
+11
+15
+
+complexKeys:
+1 2 3
+ 4        6 7
+67 11 22
+
+
+
+
+10
+
+EXPLANATION:
+Complex searcher test that tests various input edge cases
+
+TEST:
+	-note, searcherOriginal is the solution executable
+
+Script started on Mon 04 Feb 2013 07:04:26 PM EST
+bkravche@linux024:~/cs343/A02$ ./searcher complexTest complexKeys &>o1
+bkravche@linux024:~/cs343/A02$ ./searcherOriginal complexTest complexKeys &>o2
+bkravche@linux024:~/cs343/A02$ diff o1 o2 
+bkravche@linux024:~/cs343/A02$ exit
+exit
+
+RESULTS:
+All output matches the sample solution
+

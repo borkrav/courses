@@ -1,0 +1,15 @@
+function [ a b c d ] = MySpline( x, y )
+
+n = size(x);
+n = n(1);
+
+r = [];
+
+for i=2:n-1
+
+    r(i,1) = 
+
+
+
+end
+

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./setcalc2 < cover.ssl > cover.dat

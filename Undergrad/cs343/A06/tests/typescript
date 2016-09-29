@@ -1,0 +1,50 @@
+Script started on Mon 08 Apr 2013 06:09:52 PM EDT
+bkravche@linux028:~/Desktop/soda$ ./soda input.config 
+Parent	WATOff	Names	Truck	Plant	Stud0	Mach0	Cour0	
+*******	*******	*******	*******	*******	*******	*******	*******
+S	S	S				S1	S	
+D0,3		R0						
+D0,2								
+D0,2	C0,5		S	S	S0,1			
+D0,1								
+D0,2	W		P0	P			t0,5	
+D0,3							T0,5	
+D0,3				G2				
+D0,1			P2	P				
+			d0,2			r		
+			U0,2					
+D0,1		N0,0	D0,0		V0			
+D0,1				G3		R		
+D0,3								
+D0,2					B4	B0,0		
+...	...	...	...	...	F	...	...
+D0,3								
+D0,2								
+...	...	...	...	F	...	...	...
+D0,1								
+D0,1								
+D0,3								
+D0,2								
+D0,1								
+D0,2								
+...	...	...	F	...	...	...	...
+D0,3								
+D0,3								
+...	...	...	...	...	...	F	...
+D0,2								
+D0,1								
+...	...	F	...	...	...	...	...
+D0,1								
+D0,1								
+...	F	...	...	...	...	...	...
+D0,2								
+D0,2								
+...	...	...	...	...	...	...	...
+D0,1								
+D0,3								
+F	...	...	...	...	...	...	...
+***********************
+bkravche@linux028:~/Desktop/soda$ exit
+exit
+
+Script done on Mon 08 Apr 2013 06:10:02 PM EDT

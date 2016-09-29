@@ -1,0 +1,77 @@
+------------------------------TEST 1------------------------------
+
+INPUT:
+
+1  xv
+2  xx
+3  xyyzuuuv x 
+4  xyzuv x
+5  yzuuv
+6  xyzuu
+7  xzuv
+8  xyuv
+9  xyzv
+10
+
+EXPLANATION:
+1. Simple accept case 
+	- tests 44 in q3main.cpp
+2. Simple reject case
+	- tests 67 in q3main.cpp
+3. Accept case with extra charecters
+	- tests 49 in q3main.cpp
+4. Reject case with extra charecters
+	- tests 58 in q3main.cpp
+5. No x at the beginning reject case
+	- tests 14 in q3grammar.cpp
+6. No v at the end reject case
+	- tests 45 in q3grammar.cpp
+7. No y's accept case
+	- tests 26-42 in q3grammar.cpp
+8. No z's accept case
+	- tests 26-42 in q3grammar.cpp
+9. No u's reject case
+	- tests 26-42 in q3grammar.cpp
+10. Blank line
+	-tests 83 in q3main.cpp
+	
+TEST:	
+1  Script started on Mon 21 Jan 2013 05:22:51 PM EST
+2  bkravche@linux032:~/cs343/temp$ ./grammar testcase
+3  "xv" : "xv" yes
+4  "xx" : "xx" no
+5  "xyyzuuuv x " : "xyyzuuuv" yes -- extraneous characters " x "
+6  "xyzuv x" : "xyzuv" no -- extraneous characters " x"
+7  "yzuuv" : "y" no -- extraneous characters "zuuv"
+8  "xyzuu" : "xyzuu" no
+9  "xzuv" : "xzuv" yes
+10  "xyuv" : "xyuv" yes
+11  "xyzv" : "xyzv" no
+12  "" : Warning! Blank line.
+13  bkravche@linux032:~/cs343/temp$ exit
+14  exit
+15
+16  Script done on Mon 21 Jan 2013 05:23:06 PM EST
+
+ANALYSYS:
+All output matched output of solution, therefore all given cases passed
+
+
+------------------------------TEST 2------------------------------
+
+EXPLANATION:
+This test ensured that both methods of input produced the same results
+	- tests 97-130 in q3main.cpp
+
+TEST:
+1  Script started on Mon 21 Jan 2013 05:25:39 PM EST
+2  bkravche@linux032:~/cs343/temp$ ./grammar testcase > output1
+3  bkravche@linux032:~/cs343/temp$ ./grammar < testcase > output2
+4  bkravche@linux032:~/cs343/temp$ diff output1 output2
+5  bkravche@linux032:~/cs343/temp$ exit
+6  exit
+7
+8  Script done on Mon 21 Jan 2013 05:26:03 PM EST
+
+ANALYSIS:
+Diff did not return anything, therefore the test passed

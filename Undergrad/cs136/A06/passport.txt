@@ -1,0 +1,213 @@
+Analysis for passport.ss
+
+Running time of iempty is O(1)
+
+Running time of iappend_destroy is O(1)
+
+Q  |  #Q  |  tQ  |  #A  |  tA  |  total    
+1  |   1  | O(1) |   1  | O(1) | 0(1)
+2  |   1  | O(1) |   1  | O(1) | 0(1)
+3  |   1  | O(1) |   1  | O(1) | 0(1)
+4  |   1  | O(1) |   1  | O(1) | 0(1)
+
+Running time of ifirst is O(1)
+
+Running time of irest_destroy is O(1)
+
+Running time of icons_destroy is O(1)
+
+Running time of iempty? is O(1)
+
+
+Analysis of the passport-office function
+
+Q  |  #Q  |  tQ  |  #A  |  tA  |  total    
+1  |   n  | O(1) |   1  | O(1) | O(n)
+2  |   n  | O(1) |   a  | O(1) | O(n)       a being the amount of times the user enters "enter", a<=n
+3  |   n  | O(1) |   b  | O(1) | O(n)       b being the amount of times the user enters "serve", b<=n
+4  |   b  | O(1) |  <=b | O(1) | O(b)       O(b) < O(n)
+5  |   b  | O(1) |  <=b | O(1) | O(b)
+6  |   n  | O(1) |   c  | O(1) | O(n)       c being the amount if times garbage is entered, c<=n
+
+Therefore, passport-office runs in O(n) time, n being the amount of input lines
+
+
+(define line (iempty)) ;;runs in O(1)
+
+(define (passport-office) ;;runs in O(1)
+   (define cmd (read)) ;;runs in O(1)
+   (define name null) ;;runs in O(1)
+
+1) [(eof-object? cmd) (printf "")] prinf runs in O(1) time
+
+2)  [(symbol=? 'enter cmd) 
+         (set! name (read))  ;; runs in O(1)
+         (set! line (iappend_destroy line (icons_destroy name (iempty)))) ;;set! runs in O(1), icons_destroy runs in O(1)
+         (printf "seat ~a" name) ;; printf runs in O(1)
+         (newline) ;; runs in O(1)
+         (passport-office)] ;;recursive step
+         
+         
+3) [(symbol=? 'serve cmd)
+         (cond 
+         
+         4)  [(iempty? line) ;;runs in O(1)
+                     (printf "serve ?") ;;runs in O(1)
+                     (newline)] ;;runs in O(1)
+                     
+         5)   [else (printf "serve ~a" (ifirst line)) ;;runs in O(1)
+                     (newline) ;;runs in O(1)
+                     (set! line (irest_destroy line))]) ;;runs in O(1)
+                     
+                     
+      (passport-office)] ;;recursive step        
+
+
+
+6)   [else (passport-office)] ;; recursive step
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Source Code
+
+passport.ss
+
+#lang scheme
+
+(require "ilist_destructive.ss")
+
+(define line (iempty))
+
+(define (passport-office)
+   (define cmd (read))
+   (define name null)
+   (cond [(eof-object? cmd) (printf "")] ;exits and returns nothing
+   
+         [(symbol=? 'enter cmd) 
+         (set! name (read))
+         (set! line (iappend_destroy line (icons_destroy name (iempty))))
+         (printf "seat ~a" name)
+         (newline)
+         (passport-office)]
+         
+         [(symbol=? 'serve cmd)
+         
+         (cond [(iempty? line) 
+                     (printf "serve ?")
+                     (newline)]
+         
+               [else (printf "serve ~a" (ifirst line))
+                     (newline)
+                     (set! line (irest_destroy line))])
+                     
+                     
+         (passport-office)]
+
+         [else (passport-office)] 
+   )
+   
+)
+
+(passport-office) 
+
+
+ilist_destructive.ss
+
+
+#lang scheme
+
+(provide iempty iempty? icons_destroy ifirst irest_destroy ilength icopy iappend_destroy)
+
+(define-struct list-node (first rest length tail) #:mutable #:transparent)
+
+(define counter 1)
+(define tail null)
+
+(define (icons_destroy number list)
+  (define r (make-list-node number (unbox list) counter null))
+  (set! counter (+ 1 counter))
+  (cond [(boolean=? (iempty? list) #t) (set! tail r)])
+  (set-list-node-tail! r tail)      
+  (box r)
+  )
+
+(define (ifirst list)
+  (list-node-first (unbox list))
+  )
+
+(define (irest_destroy list)
+  (define r (list-node-rest (unbox list)))
+  (set-list-node-length! r (- (ilength list) 1))
+  (set-list-node-tail! r (list-node-tail (unbox list)))
+  (box r)
+  )
+
+(define (iempty) 
+  (define r (box (make-list-node null null null null)))
+  (set! counter 1)
+  r
+  )
+
+(define (iempty? list)
+  (cond [(null? (list-node-first (unbox list))) true]
+        [else false]
+        )
+  )
+
+(define (ilength list)
+  (cond [(boolean=? true (iempty? list)) 0]
+        [else (list-node-length (unbox list))]
+        
+        )
+  )
+
+(define (icopy list)
+  
+  (define copy (iempty))
+  (define (copier list result)
+    (cond [(iempty? list) (iempty)]
+          [else
+           (set! copy (icons_destroy (ifirst list) result))
+           (copier (irest_destroy list) copy)])
+    
+    )
+  (copier list copy)
+  (copier copy (iempty))
+  copy
+  
+  )
+
+
+(define result 0)
+
+(define (iappend_destroy list1 list2)
+  
+  
+  (cond [(and (boolean=? false (iempty? list1))
+              (boolean=? true (iempty? list2)))
+         (set! result list1)
+         (set-list-node-length! (unbox result) (ilength list1))]
+        
+        [(and (boolean=? true (iempty?  list1))
+              (boolean=? false (iempty? list2)))
+         (set! result list2)
+         (set-list-node-length! (unbox result) (ilength list2))]
+        
+        [(and (boolean=? false (iempty? list1))
+              (boolean=? false (iempty? list2)))
+         
+         (set-list-node-rest! (list-node-tail (unbox list1)) (unbox list2))
+         
+         (set! result list1)
+         (set-list-node-length! (unbox result) (+ (ilength list1)(ilength list2)))
+         (set-list-node-tail! (unbox result) (list-node-tail (unbox list2)))]
+        
+        [else 
+         (set! result (iempty))]
+        
+        )
+  
+  result
+  )
+

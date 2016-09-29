@@ -1,0 +1,516 @@
+#include <iostream>
+#include "util.h"
+#include <stdlib.h>
+#include <vector>
+#include <string.h>
+
+using namespace std;
+
+EXEC SQL INCLUDE SQLCA; 
+
+
+EXEC SQL BEGIN DECLARE SECTION;
+char db[6] = "cs348";
+char result[100];
+
+sqlint32 pk;
+char charPk[10];
+char name[22];
+char url[42];
+
+char title[70];
+char publisher[50];
+char appearsin[10];
+sqlint32 author;
+sqlint32 order;
+sqlint32 year;
+sqlint32 startpage;
+sqlint32 endpage;
+sqlint32 volume;
+sqlint32 number;
+
+
+EXEC SQL END DECLARE SECTION;
+
+
+
+
+void print (string value){
+    
+    
+        
+    
+    string typeOfPublication;
+    
+    strcpy(charPk,value.c_str());
+    
+    cout << "Pubid: " << value << endl;
+    
+    
+    EXEC SQL
+    SELECT pubid into :result
+    FROM journal
+    WHERE pubid = :charPk;
+    
+    if (SQLCODE != 100){
+        typeOfPublication = "journal";
+    }
+    
+    EXEC SQL
+    SELECT pubid into :result
+    FROM article
+    WHERE pubid = :charPk;
+    
+    if (SQLCODE != 100){
+        typeOfPublication = "article";
+    }
+    EXEC SQL
+    SELECT pubid into :result
+    FROM book
+    WHERE pubid = :charPk;
+    
+    if (SQLCODE != 100){
+        typeOfPublication = "book";
+    }
+    EXEC SQL
+    SELECT pubid into :result
+    FROM proceedings
+    WHERE pubid = :charPk;
+    
+    if (SQLCODE != 100){
+        typeOfPublication = "proceedings";
+    }
+    
+    cout << "Type: " << typeOfPublication << endl;
+    
+    
+    cout << "Authors: ";
+    
+    EXEC SQL
+    DECLARE C2 CURSOR FOR
+    SELECT author.name
+    FROM author, wrote 
+    WHERE author.aid = wrote.aid
+    AND wrote.pubid = :charPk 
+    ORDER BY aorder;
+    
+    EXEC SQL 
+    OPEN C2;
+    
+    string resultString;
+    int resultInt; 
+    
+    for( ;; ) {
+        
+        EXEC SQL
+        FETCH C2 INTO :result;
+        if (SQLCODE == 100) break;
+        else if (SQLCODE < 0 ) break;
+        resultString = result;
+        cout << resultString;
+    }
+    
+    cout << endl;
+    
+    EXEC SQL 
+    CLOSE C2;
+    
+    EXEC SQL
+    SELECT title into :result
+    FROM publication
+    WHERE pubid = :charPk;
+    
+    
+    resultString = result;
+    cout << "Title: " << resultString << endl; 
+    
+    
+    if (typeOfPublication == "book"){
+        EXEC SQL
+        SELECT publisher, year into :publisher, :year
+        FROM book
+        WHERE pubid = :charPk;
+        
+        resultString = publisher;
+        cout << "Publisher: " << resultString << endl;
+        cout << "Year: " << year << endl;
+    }
+    
+    else if (typeOfPublication == "proceedings"){
+        EXEC SQL
+        SELECT year into :year
+        FROM proceedings
+        WHERE pubid = :charPk;
+        
+        cout << "Year: " << year << endl;
+    }
+    
+    else if (typeOfPublication == "journal"){
+        EXEC SQL
+        SELECT volume, number, year into :volume, :number, :year
+        FROM journal
+        WHERE pubid = :charPk;
+        
+        cout << "Volume: " << volume << endl;
+        cout << "Number: " << number << endl;
+        cout << "Year: " << year << endl;
+    }
+    
+    else if (typeOfPublication == "article"){
+        EXEC SQL
+        SELECT appearsin, startpage, endpage into :appearsin, :startpage, :endpage
+        FROM article
+        WHERE pubid = :charPk;
+        
+        string temp = appearsin;
+        
+        strcpy(charPk,temp.c_str());
+        
+        
+        
+        EXEC SQL
+        SELECT title into :result
+        FROM publication
+        WHERE pubid = :charPk;
+        
+        resultString = result;
+        
+        cout << "In: " << resultString << endl;
+        cout << "Pages: " << startpage << " - " << endpage << endl;
+    }
+    
+    cout << endl;
+    
+
+    
+    
+    
+    
+}
+
+
+
+
+int main(int argc, char *argv[]) {
+	char * getpass();
+	string myLine;
+
+
+   
+	EXEC SQL WHENEVER SQLERROR  GO TO error;
+	EXEC SQL CONNECT TO :db;   
+   
+	while (getline(cin, myLine)){
+   		
+		vector <string> query;
+	   
+		string delims = "(;#)";
+		size_t cur;
+		size_t next = -1;
+		
+		do {
+			cur = next + 1;
+			next = myLine.find_first_of(delims, cur);
+			query.push_back(myLine.substr(cur, next - cur));
+		} while (next != string::npos);
+        
+	
+		if(query[0] == "author"){
+	
+			pk = (sqlint32)atoi(query[1].c_str());
+			strcpy(name,query[2].c_str());
+				
+			EXEC SQL
+				SELECT name into :result
+				FROM author
+				WHERE aid = :pk;
+			
+			if (SQLCODE == 100){
+				EXEC SQL
+					INSERT INTO author
+					(aid,name)
+					VALUES
+					(:pk,:name);	
+			}
+			
+			else {
+				EXEC SQL
+					UPDATE author
+					SET name = :name
+					WHERE aid = :pk;	
+			}
+            cout << "Author ID: " << query[1] << endl;
+            cout << "Name: " << query[2] << endl;
+            cout << endl;
+			
+		}
+		
+		if(query[0] == "authorurl"){
+            
+            pk = (sqlint32)atoi(query[1].c_str());
+			strcpy(url,query[2].c_str());
+				
+			EXEC SQL
+				UPDATE author
+				SET url = :url
+				WHERE aid = :pk;	
+            
+            EXEC SQL
+                SELECT name into :result
+                FROM author
+                where aid = :pk;
+            
+            string temp = result;
+            
+            cout << "Author ID: " << query[1] << endl;
+            cout << "Name: " << result << endl;
+            cout << "URL: " << query[2] << endl;
+            cout << endl;
+            
+		}
+		
+		
+		if(query[0] == "book"){
+	
+			strcpy(charPk,query[1].c_str());
+			strcpy(title,query[2].c_str());
+			strcpy(publisher,query[query.size()-3].c_str());
+            year = (sqlint32)atoi(query[query.size()-2].c_str());
+
+	
+			EXEC SQL
+				SELECT title into :result
+				FROM publication
+				WHERE pubid = :charPk;
+			
+			if (SQLCODE == 100){
+				EXEC SQL
+					INSERT INTO publication
+					(pubid,title)
+					VALUES
+					(:charPk,:title);	
+				EXEC SQL	
+					INSERT INTO book
+					(pubid, publisher, year)
+					VALUES
+					(:charPk, :publisher, :year);
+					
+				for (int i = 3; i < query.size()-3; i++){
+					author = (sqlint32)atoi(query[i].c_str());
+					order = i-2;
+					
+					EXEC SQL	
+						INSERT INTO wrote
+						(aid, pubid, aorder)
+						VALUES
+						(:author, :charPk, :order);
+				}
+					
+			}
+			
+			else {
+				EXEC SQL
+					UPDATE publication
+					SET title = :title
+					WHERE pubid = :charPk;	
+				EXEC SQL	
+					UPDATE book
+					SET publisher = :publisher, year = :year
+					WHERE pubid = :charPk;
+				EXEC SQL	
+					DELETE FROM wrote
+					WHERE pubid = :charPk;
+				
+				for (int i = 3; i < query.size()-3; i++){
+					author = (sqlint32)atoi(query[i].c_str());
+					order = i-2;
+					
+					EXEC SQL
+						INSERT INTO wrote
+						(aid, pubid, aorder)
+						VALUES
+						(:author, :charPk, :order);
+				}	
+					
+					
+			}
+            print(query[1].c_str());
+			
+		}
+        
+        if(query[0] == "journal"){
+            
+			strcpy(charPk,query[1].c_str());
+			strcpy(title,query[2].c_str());
+			volume = (sqlint32)atoi(query[3].c_str());
+            number = (sqlint32)atoi(query[4].c_str());
+            year = (sqlint32)atoi(query[5].c_str());
+            
+			EXEC SQL
+            SELECT title into :result
+            FROM publication
+            WHERE pubid = :charPk;
+			
+			if (SQLCODE == 100){
+				EXEC SQL
+                INSERT INTO publication
+                (pubid,title)
+                VALUES
+                (:charPk,:title);	
+				EXEC SQL	
+                INSERT INTO journal
+                (pubid, volume, number, year)
+                VALUES
+                (:charPk, :volume, :number, :year);
+			}
+			
+			else {
+				EXEC SQL
+                UPDATE publication
+                SET title = :title
+                WHERE pubid = :charPk;	
+				EXEC SQL	
+                UPDATE journal
+                SET volume = :volume, number = :number, year = :year
+                WHERE pubid = :charPk;
+			}
+			 print(query[1].c_str());
+		}
+        
+        
+        if(query[0] == "proceedings"){
+            
+			strcpy(charPk,query[1].c_str());
+			strcpy(title,query[2].c_str());
+            year = (sqlint32)atoi(query[query.size()-2].c_str());
+            
+            
+			EXEC SQL
+            SELECT title into :result
+            FROM publication
+            WHERE pubid = :charPk;
+			
+			if (SQLCODE == 100){
+				EXEC SQL
+                INSERT INTO publication
+                (pubid,title)
+                VALUES
+                (:charPk,:title);	
+				EXEC SQL	
+                INSERT INTO proceedings
+                (pubid, year)
+                VALUES
+                (:charPk, :year);
+			}
+			
+			else {
+				EXEC SQL
+                UPDATE publication
+                SET title = :title
+                WHERE pubid = :charPk;	
+				EXEC SQL	
+                UPDATE proceedings
+                SET year = :year
+                WHERE pubid = :charPk;
+			}
+             print(query[1].c_str());
+			
+		}
+        
+        
+        if(query[0] == "article"){
+            
+			strcpy(charPk,query[1].c_str());
+			strcpy(title,query[2].c_str());
+			strcpy(appearsin,query[query.size()-4].c_str());
+            endpage = (sqlint32)atoi(query[query.size()-2].c_str());
+            startpage = (sqlint32)atoi(query[query.size()-3].c_str());
+            
+			EXEC SQL
+            SELECT title into :result
+            FROM publication
+            WHERE pubid = :charPk;
+			
+			if (SQLCODE == 100){
+				EXEC SQL
+                INSERT INTO publication
+                (pubid,title)
+                VALUES
+                (:charPk,:title);	
+				EXEC SQL	
+                INSERT INTO article
+                (pubid, appearsin, startpage, endpage)
+                VALUES
+                (:charPk, :appearsin, :startpage, :endpage);
+                
+				for (int i = 3; i < query.size()-4; i++){
+					author = (sqlint32)atoi(query[i].c_str());
+					order = i-2;
+					
+					EXEC SQL	
+                    INSERT INTO wrote
+                    (aid, pubid, aorder)
+                    VALUES
+                    (:author, :charPk, :order);
+				}
+                
+			}
+			
+			else {
+				EXEC SQL
+                UPDATE publication
+                SET title = :title
+                WHERE pubid = :charPk;	
+				EXEC SQL	
+                UPDATE article
+                SET appearsin = :appearsin, startpage = :startpage, endpage = :endpage
+                WHERE pubid = :charPk;
+				EXEC SQL	
+                DELETE FROM wrote
+                WHERE pubid = :charPk;
+				
+				for (int i = 3; i < query.size()-4; i++){
+					author = (sqlint32)atoi(query[i].c_str());
+					order = i-2;
+					
+					EXEC SQL
+                    INSERT INTO wrote
+                    (aid, pubid, aorder)
+                    VALUES
+                    (:author, :charPk, :order);
+				}	
+                
+                
+			}
+             print(query[1].c_str());
+			
+		}
+
+        
+        
+        
+        
+
+	}
+	
+	
+	EXEC SQL COMMIT;
+	EXEC SQL CONNECT reset;
+	
+	exit(0);
+	
+error:
+	check_error("Bad input",&sqlca);
+	EXEC SQL WHENEVER SQLERROR CONTINUE;
+
+	EXEC SQL ROLLBACK;
+	EXEC SQL CONNECT reset;
+	exit(1);
+	
+	
+	
+}
+	
+
+
+

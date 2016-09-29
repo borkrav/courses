@@ -1,0 +1,7 @@
+author(3#The Last Free Man)
+authorurl(3#http://db.uwaterloo.ca/itbowman)
+book(1#TEST#2;1#ABCD#1991)
+proceedings(test123#test proceeding#1234)
+article(art1#testArticle#1;2;3#test123#10#20) 
+journal(jrn1#testJournal#66#10#2001) 
+

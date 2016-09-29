@@ -1,0 +1,69 @@
+Script started on Thu 15 Sep 2011 03:58:21 PM EDT
+bkravche@linux024:~/cs350/asst0$ cd ~/cs350-os161/root
+bkravche@linux024:~/cs350-os161/root$ sys161 kernel
+sys161: System/161 release 1.99.05, compiled Feb  4 2011 15:14:48
+
+OS/161 base system version 1.11
+Copyright (c) 2000, 2001, 2002, 2003
+   President and Fellows of Harvard College.  All rights reserved.
+
+Put-your-group-name-here's system version 0 (ASST0 #1)
+
+Cpu is MIPS r2000/r3000
+336k physical memory available
+Device probe...
+lamebus0 (system main bus)
+emu0 at lamebus0
+ltrace0 at lamebus0
+ltimer0 at lamebus0
+hardclock on ltimer0 (100 hz)
+beep0 at ltimer0
+rtclock0 at ltimer0
+lrandom0 at lamebus0
+random0 at lrandom0
+lhd0 at lamebus0
+lhd1 at lamebus0
+lser0 at lamebus0
+con0 at lser0
+pseudorand0 (virtual)
+
+OS/161 kernel [? for menu]: ?
+
+OS/161 kernel menu
+    [?o] Operations menu                [kh] Kernel heap stats              
+    [?t] Tests menu                     [q] Quit and shut down              
+
+Operation took 0.021515800 seconds
+OS/161 kernel [? for menu]: ?t
+
+OS/161 tests menu
+    [at]  Array test                    [sy1] Semaphore test                
+    [bt]  Bitmap test                   [sy2] Lock test             (1)     
+    [qt]  Queue test                    [sy3] CV test               (1)     
+    [km1] Kernel malloc test            [fs1] Filesystem test               
+    [km2] kmalloc stress test           [fs2] FS read stress        (4)     
+    [tt1] Thread test 1                 [fs3] FS write stress       (4)     
+    [tt2] Thread test 2                 [fs4] FS write stress 2     (4)     
+    [tt3] Thread test 3                 [fs5] FS create stress      (4)     
+
+    (1) These tests will fail until you finish the synch assignment.
+    (4) These tests will fail until you finish the file system assignment.
+
+Operation took 0.096737160 seconds
+OS/161 kernel [? for menu]: tt1
+Starting thread test...
+012345677777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000111111111111111111111111111111111111111111222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222223333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333334444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444455555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666661111111111111111111111111111111111111111111111111111111111111111111111111111133
+Thread test done.
+Operation took 0.281417720 seconds
+OS/161 kernel [? for menu]: q
+Shutting down.
+The system is halted.
+sys161: 1142969276 cycles (19463680 run, 1123505596 global-idle)
+sys161:   cpu0: 19463680 kern, 0 user, 0 idle)
+sys161: 7251 irqs 0 exns 0r/0w disk 11r/2770w console 0r/0w/1m emufs 0r/0w net
+sys161: Elapsed real time: 45.714454 seconds (25.0024 mhz)
+sys161: Elapsed virtual time: 45.718771057 seconds (25 mhz)
+bkravche@linux024:~/cs350-os161/root$ exit
+exit
+
+Script done on Thu 15 Sep 2011 04:00:04 PM EDT

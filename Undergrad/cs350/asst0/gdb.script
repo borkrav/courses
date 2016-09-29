@@ -1,0 +1,37 @@
+Script started on Thu 15 Sep 2011 05:08:44 PM EDT
+bkravche@linux028:~$ cd ~/cs350-os161/root/
+bkravche@linux028:~/cs350-os161/root$ cs350-gdb kernel
+GNU gdb 6.6
+Copyright (C) 2006 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "--host=x86_64-unknown-linux-gnu --target=mips-harvard-os161"...
+(gdb) dir ../os161-1.11/kern/compile/ASST0
+Source directories searched: /u8/bkravchenko/cs350-os161/root/../os161-1.11/kern/compile/ASST0:$cdir:$cwd
+(gdb) targ(gdb) targe(gdb) target(gdb) target (gdb) target r(gdb) target re(gdb) target rem(gdb) target remo(gdb) target remot(gdb) target remote(gdb) target remote (gdb) target remote u(gdb) target remote un(gdb) target remote uni(gdb) target remote unix(gdb) target remote unix:(gdb) target remote unix:.(gdb) target remote unix:.s(gdb) target remote unix:.so(gdb) target remote unix:.soc(gdb) target remote unix:.sock(gdb) target remote unix:.socke(gdb) target remote unix:.socket(gdb) target remote unix:.sockets(gdb) target remote unix:.sockets/(gdb) target remote unix:.sockets/g(gdb) target remote unix:.sockets/gd(gdb) target remote unix:.sockets/gdb
+Remote debugging using unix:.sockets/gdb
+__start () at ../../arch/mips/mips/start.S:24
+24	   addiu sp, sp, -20
+Current language:  auto; currently asm
+(gdb) break menu
+Breakpoint 1 at 0x8001baf8: file ../../main/menu.c, line 660.
+(gdb) c
+Continuing.
+
+Breakpoint 1, menu (args=0x8002a3f4 "") at ../../main/menu.c:660
+660		menu_execute(args, 1);
+Current language:  auto; currently c
+(gdb) where
+#0  menu (args=0x8002a3f4 "") at ../../main/menu.c:660
+#1  0xffffffff8001aa0c in kmain (arguments=0x8002a3f4 "")
+    at ../../main/main.c:169
+#2  0xffffffff8000d274 in __start () at ../../arch/mips/mips/start.S:163
+(gdb) detach
+Ending remote debugging.
+(gdb) quit
+bkravche@linux028:~/cs350-os161/root$ exit
+exit
+
+Script done on Thu 15 Sep 2011 05:10:31 PM EDT

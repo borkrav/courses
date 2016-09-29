@@ -1,0 +1,7 @@
+set a = { "1" "2" "3" "4" "5" "6" "7" };
+set b = { "2" "3" };
+set c = { "1" "4" };
+set d = { "7" };
+set e = { "8" };
+set result = (( a - c ) + e) ;
+output result;

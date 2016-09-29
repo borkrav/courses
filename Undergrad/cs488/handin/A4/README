@@ -1,0 +1,56 @@
+Name: Boris Kravchenko 
+Student Number: 20332359
+User-id: bkravche
+Assignment: 4
+
+The final executable was compiled on this machine: 
+	gl07.student.cs.uwaterloo.ca
+
+How to invoke my program: 
+	Run ./rt scene.lua
+
+How to use my extra features: 
+	Run ./rt scene.lua n
+
+	n = number of threads you wish to use (ideally the number of CPU cores)
+
+	TIMINGS:
+	gl07 (6 core CPU)
+
+	macho cows (500x500) with 1 thread:
+	real	1m53.324s
+	user	1m53.263s
+	sys	0m0.036s
+
+	macho cows (500x500) with 6 threads:
+
+	real	0m22.983s
+	user	2m9.788s
+	sys	0m0.120s
+
+	5x speed up
+
+	my laptop (quad core i7)
+
+	sample (1000x1000) with 1 thread
+
+	real	3m37.005s
+	user	3m36.858s
+	sys	0m0.128s
+
+	sample (1000x1000) with 4 threads
+
+	real	1m1.170s
+	user	3m52.495s
+	sys	0m2.416s
+
+	3.6x speed up
+
+
+I have created the following data files, which are in the data directory:
+
+	All data files are as stated in assignment spec
+	My unique scene (sample.lua) contains a cow inside a rocket, flying to the 		moon
+
+My program assumes the following:
+

@@ -1,0 +1,846 @@
+<html>
+<head>
+    <title>WebGL WVS</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+
+    <img id="originalImage"></img>
+
+    <div id="settings">
+
+        <h1>CS791 WebGL Weighted Voronoi Stippling</h1>
+
+        <h3>Please configure parameters and select image</h3>
+
+      
+        <input id="point" type="radio" name="mode" value="point" onchange="selectPointMode()" />Point Mode<br />
+        <input id="line" type="radio" name="mode" value="line" onchange="selectLineMode()" />Line Mode<br />
+        <input id="polygon" type="radio" name="mode" value="polygon" onchange="selectPolygonMode()" />Polygon Mode
+
+
+        <div id="stippleSettings" hidden="true">
+            Stipple Count: <input type="text" id="stippleInput" value="35000" oninput="updateSlider(this.value)">
+            <input id="stippleCount" type="range" min="1000" max="70000" step="1000" onchange="updateTextInput(this.value)" />
+        </div>
+        <br />
+
+        <div id="LineSettings" hidden="true">
+            Line Count: <input type="text" id="lineInput" value="9000" oninput="updateLineSlider(this.value)">
+            <input id="lineSlider" type="range" min="1000" max="18000" step="1000" onchange="updateLineInput(this.value)" /> <br />
+
+            Line Length (pixels, 0 for random): <input type="text" id="lineLength" value="10"> <br />
+            Line Angle (degrees, 0 for random): <input type="text" id="lineAngle" value="25"> <br />
+
+            Line Thickness: <input type="text" id="lineThickness" value="2">
+
+
+        </div>
+
+        <div id="PolygonSettings" hidden="true">
+            Polygon Count: <input type="text" id="polyInput" value="1900" oninput="updatePolySlider(this.value)">
+            <input id="polySlider" type="range" min="100" max="3800" step="100" onchange="updatePolyInput(this.value)" /> <br />
+
+            Sides: <input type="text" id="polySides" value="6"> <br />
+            Radius: <input type="text" id="polyRad" value="10"> <br />
+
+
+        </div>
+
+
+
+        <br />
+         
+        <div id="FileSelection" hidden="true">
+
+            Keep Color? <input type="checkbox" id="color"/> <br />
+            <br />
+            <input type="file" id="file"/>
+        </div>
+
+    </div>
+
+    <script src="three.min.js"></script>
+    <script>
+
+
+        function updateTextInput(val) {
+            document.getElementById('stippleInput').value = val;
+        }
+
+        function updateSlider(val) {
+            document.getElementById('stippleCount').value = val;
+        }
+
+        function updateLineInput(val) {
+            document.getElementById('lineInput').value = val;
+        }
+
+        function updateLineSlider(val) {
+            document.getElementById('lineSlider').value = val;
+        }
+
+        function updatePolyInput(val) {
+            document.getElementById('polyInput').value = val;
+        }
+
+        function updatePolySlider(val) {
+            document.getElementById('polySlider').value = val;
+        }
+
+
+        function selectPointMode() {
+            document.getElementById('stippleSettings').hidden = false
+            document.getElementById('LineSettings').hidden = true
+            document.getElementById('PolygonSettings').hidden = true
+            document.getElementById('FileSelection').hidden = false
+
+        }
+        function selectLineMode() {
+            document.getElementById('stippleSettings').hidden = true
+            document.getElementById('LineSettings').hidden = false
+            document.getElementById('PolygonSettings').hidden = true
+            document.getElementById('FileSelection').hidden = false
+
+        }
+
+        function selectPolygonMode() {
+            document.getElementById('stippleSettings').hidden = true
+            document.getElementById('LineSettings').hidden = true
+            document.getElementById('PolygonSettings').hidden = false
+            document.getElementById('FileSelection').hidden = false
+        }
+
+
+        document.getElementById('file').onchange = function () {
+
+            var selectedFile = document.getElementById('file').files[0];
+
+            var fr = new FileReader;
+
+            fr.onload = function () { // file is loaded
+                document.getElementById('settings').hidden = true
+
+                var img = new Image;
+
+                img.onload = function () {
+                    //alert(img.width); // image is loaded; sizes are available
+
+
+                    var canvas = document.createElement("canvas");
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    canvas.getContext("2d").drawImage(img, 0, 0);
+
+                    imgdisplay = document.getElementById("originalImage")
+                    imgdisplay.src = img.src
+
+                    //hide settings and file selection div
+
+                    var context = canvas.getContext('2d');
+
+                    var imgData = context.getImageData(0, 0, img.width, img.height);
+
+                    var bwData = new Array(img.width * img.height)
+
+                    var j = 0
+                    for (var i = 0; i < imgData.data.length; i += 4) {
+                        bwData[j] = (imgData.data[i] + imgData.data[i + 1] + imgData.data[i + 2]) / 3
+                        j++
+                    }
+
+                    var point = document.getElementById('point').checked
+                    var line = document.getElementById('line').checked
+                    var polygon = document.getElementById('polygon').checked
+
+                    var col = document.getElementById('color').checked
+
+                    if (point) {
+                        //in stipple mode
+
+                        var count = document.getElementById('stippleInput').value
+
+
+                        //alert (count)
+
+                        runRenderer(bwData, imgData, img.width, img.height, true, false, false, parseInt(count), 0, 0, 0, 0, 0, col);
+
+
+                    }
+
+                    else if (line) {
+                        //in line mode
+                        var count = document.getElementById('lineInput').value
+                        var lineLength = document.getElementById('lineLength').value
+                        var lineAngle = document.getElementById('lineAngle').value
+                        var lineThickness = document.getElementById('lineThickness').value
+
+
+                        runRenderer(bwData, imgData, img.width, img.height, false, true, false, parseInt(count), parseInt(lineLength), parseInt(lineAngle), parseInt(lineThickness), 0, 0, col);
+
+
+                    }
+
+                    else if (polygon) {
+                        //in polygon mode
+
+                        var count = document.getElementById('polyInput').value
+                        var sides = document.getElementById('polySides').value
+                        var radius = document.getElementById('polyRad').value
+
+                        runRenderer(bwData, imgData, img.width, img.height, false, false, true, parseInt(count), 0, 0, 0, parseInt(sides), parseInt(radius), col);
+
+
+                    }
+                        
+                        
+
+
+
+                };
+
+                img.src = fr.result; // is the data URL because called with readAsDataURL
+            };
+
+            fr.readAsDataURL(selectedFile); // I'm using a <input type="file"> for demonstrating
+
+
+
+           
+        };
+
+        function generateCone(x, y, z, coneGeo, col) {
+            var material = new THREE.MeshBasicMaterial({ color: col });
+
+            var cylMesh = new THREE.Mesh(coneGeo, material);
+
+            cylMesh.rotation.x = Math.PI / 2
+            cylMesh.position.x = x
+            cylMesh.position.y = y
+            cylMesh.position.z = z
+
+            return cylMesh
+        }
+
+
+        //the position of this is relative to p1
+        function generateObject(p1, p2, col, radius, height) {
+
+            var retGeo = new THREE.Geometry()
+
+            var totalGeo = new THREE.Geometry()
+
+            var len = p1.distanceTo(p2)
+            //alert(len)
+
+            var material = new THREE.MeshBasicMaterial({ color: col, side: THREE.DoubleSide });
+
+            var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(0, radius, height, 10, 0), material);
+            var cylinder2 = new THREE.Mesh(new THREE.CylinderGeometry(0, radius, height, 10, 0), material);
+
+            cylinder.rotation.x = Math.PI / 2
+
+            cylinder.position.x = 0
+            cylinder.position.y = 0
+            cylinder.position.z = -height / 2
+
+            cylinder2.rotation.x = Math.PI / 2
+
+            cylinder2.position.x = len
+            cylinder2.position.y = 0
+
+            cylinder2.position.z = -height / 2
+
+            var squareGeometry = new THREE.Geometry();
+            squareGeometry.vertices.push(new THREE.Vector3(0, 0, 0.0));
+            squareGeometry.vertices.push(new THREE.Vector3(0, radius, -height));
+            squareGeometry.vertices.push(new THREE.Vector3(len, radius, -height));
+            squareGeometry.vertices.push(new THREE.Vector3(len, 0, 0.0));
+            squareGeometry.faces.push(new THREE.Face3(0, 1, 2));
+            squareGeometry.faces.push(new THREE.Face3(0, 2, 3));
+
+            squareGeometry.computeFaceNormals();
+
+            var squareMesh = new THREE.Mesh(squareGeometry, material);
+
+            var squareMesh2 = new THREE.Mesh(squareGeometry, material);
+
+            squareMesh2.rotation.z = Math.PI
+            squareMesh2.position.x = len
+
+
+            cylinder.updateMatrix();
+            cylinder2.updateMatrix();
+            squareMesh.updateMatrix();
+            squareMesh2.updateMatrix();
+
+            totalGeo.merge(cylinder.geometry, cylinder.matrix);
+            totalGeo.merge(cylinder2.geometry, cylinder2.matrix);
+            totalGeo.merge(squareMesh.geometry, squareMesh.matrix);
+            totalGeo.merge(squareMesh2.geometry, squareMesh2.matrix);
+
+            var totalMesh = new THREE.Mesh(totalGeo, material)
+
+
+
+
+            if (p1.y <= p2.y && p1.x <= p2.x) {
+                totalMesh.position.x = p1.x
+                totalMesh.position.y = p1.y
+                totalMesh.rotation.z = Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+            if (p1.y >= p2.y && p1.x <= p2.x) {
+                totalMesh.position.x = p1.x
+                totalMesh.position.y = p1.y
+                totalMesh.rotation.z = -Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+
+            if (p1.y >= p2.y && p1.x >= p2.x) {
+                totalMesh.position.x = p1.x
+                totalMesh.position.y = p1.y
+                totalMesh.rotation.z = Math.PI + Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+
+            if (p1.y <= p2.y && p1.x >= p2.x) {
+                totalMesh.position.x = p1.x
+                totalMesh.position.y = p1.y
+                totalMesh.rotation.z = Math.PI - Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+
+
+            totalMesh.updateMatrix()
+
+            retGeo.merge(totalMesh.geometry, totalMesh.matrix)
+
+            var retMesh = new THREE.Mesh(retGeo, material)
+
+            return retMesh
+
+        }
+
+        function drawLine(p1, p2, width) {
+
+            var material = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide });
+            var len = p1.distanceTo(p2)
+
+
+            var squareGeometry = new THREE.Geometry();
+            squareGeometry.vertices.push(new THREE.Vector3(0, width / 2, 0.0));
+            squareGeometry.vertices.push(new THREE.Vector3(0 + len, width / 2, 0));
+            squareGeometry.vertices.push(new THREE.Vector3(0 + len, -width / 2, 0));
+            squareGeometry.vertices.push(new THREE.Vector3(0, -width / 2, 0.0));
+            squareGeometry.faces.push(new THREE.Face3(0, 1, 2));
+            squareGeometry.faces.push(new THREE.Face3(0, 2, 3));
+
+            var totalMesh = new THREE.Mesh(squareGeometry, material);
+
+            totalMesh.position.x = p1.x
+            totalMesh.position.y = p1.y
+
+            if (p1.y <= p2.y && p1.x <= p2.x) {
+                totalMesh.rotation.z = Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+            if (p1.y >= p2.y && p1.x <= p2.x) {
+                totalMesh.rotation.z = -Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+
+            if (p1.y >= p2.y && p1.x >= p2.x) {
+                totalMesh.rotation.z = Math.PI + Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+
+            if (p1.y <= p2.y && p1.x >= p2.x) {
+                totalMesh.rotation.z = Math.PI - Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+
+
+            return totalMesh
+
+
+        }
+
+        function moveLine(p1, p2, mesh) {
+
+            mesh.position.x = p1.x
+            mesh.position.y = p1.y
+
+            if (p1.y <= p2.y && p1.x <= p2.x) {
+                mesh.rotation.z = Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+            if (p1.y >= p2.y && p1.x <= p2.x) {
+                mesh.rotation.z = -Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+
+            if (p1.y >= p2.y && p1.x >= p2.x) {
+                mesh.rotation.z = Math.PI + Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+
+            if (p1.y <= p2.y && p1.x >= p2.x) {
+                mesh.rotation.z = Math.PI - Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+
+
+            return mesh
+
+
+        }
+
+        function runRenderer(imgData, colData, w, h, pointMode, lineMode, polygonMode, numStipples, lineLength, lineAngle, lineThickness, polySides, polyRad, keepColor) {
+
+
+            //polygons end up being too expensive for webGL, should stick to just lines and points
+            //talk about this in my report
+
+            //lines = 0 to 7000
+            //points = 0 to 70000
+
+            
+            //variables
+            var renderRegions = false
+            var renderPoints = true
+            var recalculate = true
+            var width = w
+            var height = h
+            var cylQuality = 7
+            var stippleQuality = 10
+            var cylHeight = 500
+            var cylRadius = 5000
+            var cones = new Array(numStipples)
+            var stipples = new Array(numStipples)
+
+            var geometryData = new Array(numStipples)
+
+
+            //set up rendering
+            var scene = new THREE.Scene();
+            var camera = new THREE.OrthographicCamera(0, width, height, 0, 0, 1000);
+            //bottom left is (0,0)
+            var renderer = new THREE.WebGLRenderer({ preserveDrawingBuffer: true });
+            renderer.setSize(width, height);
+            renderer.setClearColor(0xffffff, 1);
+            document.body.appendChild(renderer.domElement);
+
+            //generate geometryData
+            for (var i = 0; i < geometryData.length; i++) {
+
+                //this should be the center
+                var x = Math.random() * (width + 1)
+                var y = Math.random() * (height + 1)
+
+
+                if (lineMode) {
+
+                    var rx = 0
+                    var ry = 0
+
+                    //alert(lineLength)
+                    //alert(lineAngle)
+
+                    if (lineLength == 0 && lineAngle == 0) {
+                        rx = Math.random() * (25) - 10
+                        ry = Math.random() * (25) - 10
+                    }
+
+                    else if (lineAngle == 0) {
+                        var angle = Math.random() * 180
+
+                        var ry = Math.sin(angle/180*Math.PI) * lineLength
+                        var rx = Math.cos(angle / 180 * Math.PI) * lineLength
+
+                    }
+
+                    else if (lineLength == 0) {
+                        var len = Math.random() * 50
+                        var ry = Math.sin(lineAngle / 180 * Math.PI) * len
+                        var rx = Math.cos(lineAngle / 180 * Math.PI) * len
+
+                    }
+
+                    else {
+                        var ry = Math.sin(lineAngle / 180 * Math.PI) * lineLength
+                        var rx = Math.cos(lineAngle / 180 * Math.PI) * lineLength
+                    }
+
+
+                    var x2 = x + rx
+                    var y2 = y + ry
+                    var p1 = new THREE.Vector3(x-rx, y-ry)
+                    var p2 = new THREE.Vector3(x2, y2)
+
+                    var points = new Array(2)
+                    points[0] = p1
+                    points[1] = p2
+                }
+
+                else if (pointMode) {
+                    var points = new Array(1)
+                    var p1 = new THREE.Vector3(x, y)
+
+                    points[0] = p1
+                }
+
+                if (polygonMode) {
+
+                    var sides = polySides
+                    var radius = polyRad
+
+                    var points = new Array(sides)
+
+                    for (var j = 0; j < sides; j++) {
+                        var angle = (Math.PI / 2) + (j / sides) * 2 * Math.PI
+
+                        points[j] = new THREE.Vector3(radius*Math.cos(angle), radius*Math.sin(angle), 0.0)
+
+                    }
+
+                }
+
+
+
+                geometryData[i] = { geometry: points, centerX: x, centerY: y, m00: 0, m10: 0, m01: 0, ink: 0, size: 0, pixels: 0, render: true, red:0, green:0, blue:0 }
+            }
+
+
+
+
+            var cylGeometry = new THREE.CylinderGeometry(0, cylRadius, cylHeight, cylQuality, 0);
+            var circleGeometry = new THREE.CircleGeometry(3, stippleQuality);
+
+           
+
+
+
+            for (var i = 0; i < geometryData.length; i++) {
+
+                var col = new THREE.Color("rgb(" + i % 255 + "," + (i >> 8) % 255 + "," + (i >> 16) % 255 + ")")
+
+
+                if (geometryData[i].geometry.length == 1) {
+
+                        cones[i] = generateCone(geometryData[i].geometry[0].x, geometryData[i].geometry[0].y, -cylHeight / 2, cylGeometry, col);
+
+                        var circleMaterial = new THREE.MeshBasicMaterial({
+                            color: 0x000000,
+                        });
+
+                        var circle = new THREE.Mesh(circleGeometry, circleMaterial);
+                        circle.position.x = geometryData[i].geometry[0].x
+                        circle.position.y = geometryData[i].geometry[0].y
+
+                        stipples[i] = circle
+                    
+                }
+
+                else if (geometryData[i].geometry.length == 2) {
+
+                    cones[i] = generateObject(geometryData[i].geometry[0], geometryData[i].geometry[1], col, cylRadius, cylHeight)
+
+                    var material = new THREE.LineBasicMaterial({
+                        color: 0x000000
+                    });
+
+                    //add line thickness
+                    var line = drawLine(geometryData[i].geometry[0], geometryData[i].geometry[1], lineThickness)
+
+                    stipples[i] = line
+
+                }
+
+                else if (geometryData[i].geometry.length > 2) {
+
+                    var totalGeo = new THREE.Geometry()
+                    var material = new THREE.MeshBasicMaterial({ color: col, side: THREE.DoubleSide });
+
+                    var polyGeo = new THREE.Geometry()
+                    var polyMat = new THREE.LineBasicMaterial({
+                        color: 0x000000
+                    });
+
+                    for (var j = 0; j < geometryData[i].geometry.length; j++) {
+
+                        var piece = generateObject(geometryData[i].geometry[j], geometryData[i].geometry[(j + 1) % (geometryData[i].geometry.length)], col, cylRadius, cylHeight)
+
+                        piece.updateMatrix();
+
+                        totalGeo.merge(piece.geometry, piece.matrix)
+
+                        polyGeo.vertices.push(geometryData[i].geometry[j])
+                        
+                    }
+
+                    cones[i] = new THREE.Mesh(totalGeo, material)
+
+
+
+
+
+                    for (var j = 0; j < geometryData[i].geometry.length - 2; j++) {
+                        polyGeo.faces.push(new THREE.Face3(0, j + 1, j + 2))
+
+
+                    }
+
+                    stipples[i] = new THREE.Mesh(polyGeo, polyMat)
+
+                    stipples[i].position.x = geometryData[i].centerX
+                    stipples[i].position.y = geometryData[i].centerY
+                    cones[i].position.x = geometryData[i].centerX
+                    cones[i].position.y = geometryData[i].centerY
+                    
+                }
+
+
+
+            }
+
+            //add geometry to the scene
+            for (var i = 0; i < geometryData.length; i++) {
+                scene.add(cones[i]);
+                scene.add(stipples[i]);
+
+
+            }
+
+
+            var render = function () {
+
+                requestAnimationFrame(render);
+
+                // if (!renderRegions) {
+                for (var i = 0; i < numStipples; i++) {
+                    cones[i].visible = true
+                    if (recalculate)stipples[i].visible = false
+
+
+                }
+                //  }
+            
+                renderer.render(scene, camera);
+
+                if (recalculate) {
+
+                    var pixels = new Uint8Array(width * height * 4);
+                    var gl = renderer.context;
+                    gl.readPixels(0, 0, width, height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+
+
+
+                    var x = 0, y = 0;
+
+                    for (var i = 0; i < 4 * width * height; i += 4) {
+
+                        var stippleIndex = pixels[i] + (pixels[i + 1]) * 255 + (pixels[i + 2]) * 65025;
+
+
+                        if (stippleIndex <= numStipples) {
+
+                            var weight = 1 - (imgData[(((height - 1) - y) * width) + x]) / 255.0;
+                            //var weight = 1;
+
+                            geometryData[stippleIndex].m00 += weight;
+                            geometryData[stippleIndex].m01 += y * weight;
+                            geometryData[stippleIndex].m10 += x * weight;
+
+                            geometryData[stippleIndex].ink += weight;
+                            geometryData[stippleIndex].pixels += 1;
+
+                            geometryData[stippleIndex].red += colData.data[((((height - 1) - y) * width) + x) * 4]
+                            geometryData[stippleIndex].green += colData.data[((((height - 1) - y) * width) + x) * 4 + 1]
+                            geometryData[stippleIndex].blue += colData.data[((((height - 1) - y) * width) + x) * 4 + 2]
+
+
+
+                            x += 1;
+
+                            if (x == width) {
+                                x = 0;
+                                y += 1;
+                            }
+                        }
+
+                    }
+
+
+                    for (var i = 0; i < numStipples; i++) {
+                        cones[i].visible = false
+                    }
+
+                    for (var i = 0; i < numStipples; i++) {
+
+                        //should move center of object to center of gravity
+
+                        
+
+                        //if (geometryData[i].m00 != 0) {
+
+                        if (geometryData[i].geometry.length == 1){
+
+                            geometryData[i].centerX = geometryData[i].m10 / geometryData[i].m00 + 0.5;
+                            geometryData[i].centerY = geometryData[i].m01 / geometryData[i].m00 + 0.5;
+
+                            cones[i].position.x = geometryData[i].centerX;
+                            cones[i].position.y = geometryData[i].centerY;
+
+                            stipples[i].position.x = geometryData[i].centerX
+                            stipples[i].position.y = geometryData[i].centerY
+
+                        }
+
+
+
+                        if (geometryData[i].geometry.length == 2){
+
+
+                            var newCenterX = geometryData[i].m10 / geometryData[i].m00 + 0.5
+                            var newCenterY = geometryData[i].m01 / geometryData[i].m00 + 0.5
+
+                            var offsetX = geometryData[i].centerX - newCenterX
+                            var offsetY = geometryData[i].centerY - newCenterY
+
+                            geometryData[i].centerX = newCenterX
+                            geometryData[i].centerY = newCenterY
+
+                            cones[i].position.x = cones[i].position.x - offsetX
+                            cones[i].position.y = cones[i].position.y - offsetY
+
+                            stipples[i].position.x = geometryData[i].centerX
+                            stipples[i].position.y = geometryData[i].centerY
+
+                            //if (!renderRegions) cones[i].visible = false;
+
+                        }
+
+                        if (geometryData[i].geometry.length > 2) {
+
+                            
+                            var newCenterX = geometryData[i].m10 / geometryData[i].m00 + 0.5
+                            var newCenterY = geometryData[i].m01 / geometryData[i].m00 + 0.5
+
+                            var offsetX = geometryData[i].centerX - newCenterX
+                            var offsetY = geometryData[i].centerY - newCenterY
+
+                            geometryData[i].centerX = newCenterX
+                            geometryData[i].centerY = newCenterY
+
+                            cones[i].position.x = cones[i].position.x - offsetX
+                            cones[i].position.y = cones[i].position.y - offsetY
+
+                            stipples[i].position.x = cones[i].position.x
+                            stipples[i].position.y = cones[i].position.y
+                        }
+
+
+                        //if (geometryData[i].m00 == 0) {
+                        //    geometryData[i].render = false;
+                        //    scene.remove(cones[i])
+                        //    scene.remove(stipples[i])
+                        // }
+
+                        geometryData[i].m00 = 0;
+                        geometryData[i].m10 = 0;
+                        geometryData[i].m01 = 0;
+
+
+        
+                        var size = geometryData[i].ink / geometryData[i].pixels;
+                        stipples[i].scale.x = size * 1.5
+                        stipples[i].scale.y = size * 1.5
+                        
+
+
+
+
+                        if (keepColor) {
+
+                            var red = (geometryData[i].red / geometryData[i].pixels) / 255
+                            var green = (geometryData[i].green / geometryData[i].pixels) / 255
+                            var blue = (geometryData[i].blue / geometryData[i].pixels) / 255
+
+
+                            stipples[i].material.color = new THREE.Color(red, green, blue)
+                        }
+
+                        geometryData[i].ink = 0;
+                        geometryData[i].pixels = 0;
+
+                        geometryData[i].red = 0
+                        geometryData[i].green = 0
+                        geometryData[i].blue = 0
+
+                        stipples[i].visible = true
+
+
+                    }
+
+
+                    /*
+                    if (renderPoints) {
+
+                        for (var i = 0; i < numStipples; i++) {
+
+                            if (geometryData[i].render) {
+
+                                var size = geometryData[i].ink / geometryData[i].pixels;
+                                
+
+                                if (geometryData[i].geometry.length == 1) {
+                                   
+                                }
+
+
+
+
+                                if (geometryData[i].geometry.length == 2) {
+                                    //moveLine(geometryData[i].geometry[0], geometryData[i].geometry[1], stipples[i])
+
+                                    
+
+
+                                }
+
+                                
+                                if (geometryData[i].geometry.length > 2) {
+                                    
+                                }
+                                
+
+
+                                geometryData[i].ink = 0;
+                                geometryData[i].pixels = 0;
+
+                                stipples[i].visible = true
+
+
+                            }
+                        }
+
+
+
+                        
+
+                    }
+                    */
+                    renderer.render(scene, camera);
+
+                }
+
+            };
+
+
+          
+            render();
+
+    }
+
+    </script>
+</body>
+</html>

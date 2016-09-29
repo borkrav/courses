@@ -1,0 +1,33 @@
+connect to cs348
+
+drop table emp
+
+CREATE TABLE emp ( \
+	num	INTEGER NOT NULL, \  
+	name	VARCHAR(20) NOT NULL, \
+	dept	VARCHAR(20) NOT NULL, \
+	salary	INTEGER NOT NULL, \
+	boss	INTEGER NOT NULL, \
+	PRIMARY KEY (num), \
+ 	FOREIGN KEY (boss) REFERENCES emp (num) \
+)
+
+
+insert into emp values (1, 'a', 'd1', 1333, 1)
+insert into emp values (2, 'b', 'd1', 1, 1)
+insert into emp values (3, 'c', 'd1', 333, 2)
+insert into emp values (4, 'd', 'd2', 233, 2)
+insert into emp values (5, 'e', 'd2', 133, 2)
+insert into emp values (6, 'f', 'd2', 433, 5)
+insert into emp values (7, 'g', 'd3', 333, 4)
+insert into emp values (8, 'h', 'd3', 233, 3)
+insert into emp values (9, 'i', 'd3', 133, 1)
+
+
+
+
+
+
+
+
+

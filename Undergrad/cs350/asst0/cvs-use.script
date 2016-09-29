@@ -1,0 +1,94 @@
+Script started on Thu 15 Sep 2011 05:11:44 PM EDT
+bkravche@linux028:~$ cd ~/cs350-os161/os161-1.11/kern/main
+bkravche@linux028:~/cs350-os161/os161-1.11/kern/main$ cvs add hello.c
+cvs add: scheduling file `hello.c' for addition
+cvs add: use `cvs commit' to add this file permanently
+bkravche@linux028:~/cs350-os161/os161-1.11/kern/main$ cvs diff -c main.c
+Index: main.c
+===================================================================
+RCS file: /u8/bkravchenko/cvsroot/cs350/os161-1.11/kern/main/main.c,v
+retrieving revision 1.1.1.1
+diff -c -r1.1.1.1 main.c
+*** main.c	15 Sep 2011 19:50:31 -0000	1.1.1.1
+--- main.c	15 Sep 2011 20:58:28 -0000
+***************
+*** 16,21 ****
+--- 16,22 ----
+  #include <vm.h>
+  #include <syscall.h>
+  #include <version.h>
++ #include "opt-A0.h"
+  
+  /*
+   * These two pieces of data are maintained by the makefiles and build system.
+***************
+*** 87,92 ****
+--- 88,98 ----
+  	 */
+  	assert(sizeof(userptr_t)==sizeof(char *));
+  	assert(sizeof(*(userptr_t)0)==sizeof(char));
++ 
++ 
++ 	#if OPT_A0
++ 		hello();
++ 	#endif /* OPT_A0 */
+  }
+  
+  /*
+bkravche@linux028:~/cs350-os161/os161-1.11/kern/main$ cvs commit -m "added hello function to the boot sequence"
+cvs commit: Examining .
+/u8/bkravchenko/cvsroot/cs350/os161-1.11/kern/main/hello.c,v  <--  hello.c
+initial revision: 1.1
+/u8/bkravchenko/cvsroot/cs350/os161-1.11/kern/main/main.c,v  <--  main.c
+new revision: 1.2; previous revision: 1.1
+bkravche@linux028:~/cs350-os161/os161-1.11/kern/main$ cd ../compile/ASST0/
+bkravche@linux028:~/cs350-os161/os161-1.11/kern/compile/ASST0$ make depend
+cs350-gcc   -mno-abicalls -fno-pic -Wall -W -Wwrite-strings -g -nostdinc -I../../include -I../../dev -I.  -ffreestanding -D_KERNEL -G 0 -M ../../dev/lamebus/lhd.c ../../dev/lamebus/emu.c ../../dev/generic/random.c ../../dev/generic/rtclock.c ../../dev/generic/pseudorand.c ../../dev/lamebus/ltrace.c ../../dev/lamebus/lamebus.c ../../dev/generic/console.c ../../dev/lamebus/lser.c ../../dev/generic/beep.c ../../dev/lamebus/lrandom.c ../../dev/lamebus/ltimer.c ../../dev/lamebus/rtclock_ltimer.c ../../dev/lamebus/emu_att.c ../../dev/lamebus/random_lrandom.c ../../dev/lamebus/beep_ltimer.c ../../dev/lamebus/ltrace_att.c ../../dev/generic/pseudorand_att.c ../../dev/lamebus/con_lser.c ../../dev/lamebus/lrandom_att.c ../../dev/lamebus/lser_att.c ../../dev/lamebus/lhd_att.c ../../dev/lamebus/ltimer_att.c ../../fs/sfs/sfs_io.c ../../fs/sfs/sfs_fs.c ../../fs/sfs/sfs_vnode.c ../../arch/mips/mips/dumbvm.c ../../arch/mips/mips/cache_mips1.S ../../arch/mips/mips/exception.S ../../arch/mips/mips/lamebus_mips.c ../../arch/mips/mips/interrupt.c ../../arch/mips/mips/pcb.c ../../arch/mips/mips/ram.c ../../arch/mips/mips/spl.c ../../arch/mips/mips/start.S ../../arch/mips/mips/switch.S ../../arch/mips/mips/syscall.c ../../arch/mips/mips/threadstart.S ../../arch/mips/mips/trap.c ../../arch/mips/mips/tlb_mips1.S ../../../lib/libc/mips-setjmp.S ../../lib/copyinout.c ../../lib/array.c ../../lib/bitmap.c ../../lib/queue.c ../../lib/kheap.c ../../lib/kprintf.c ../../lib/kgets.c ../../lib/misc.c ../../lib/ntoh.c ../../../lib/libc/__printf.c ../../../lib/libc/snprintf.c ../../../lib/libc/atoi.c ../../../lib/libc/bzero.c ../../../lib/libc/memcpy.c ../../../lib/libc/memmove.c ../../../lib/libc/strcat.c ../../../lib/libc/strchr.c ../../../lib/libc/strcmp.c ../../../lib/libc/strcpy.c ../../../lib/libc/strlen.c ../../../lib/libc/strrchr.c ../../../lib/libc/strtok_r.c ../../dev/init.c ../../fs/vfs/device.c ../../fs/vfs/vfscwd.c ../../fs/vfs/vfslist.c ../../fs/vfs/vfslookup.c ../../fs/vfs/vfspath.c ../../fs/vfs/vnode.c ../../fs/vfs/devnull.c ../../thread/hardclock.c ../../thread/synch.c ../../thread/scheduler.c ../../thread/thread.c ../../main/main.c ../../main/menu.c ../../main/hello.c ../../userprog/loadelf.c ../../userprog/runprogram.c ../../userprog/uio.c ../../test/arraytest.c ../../test/bitmaptest.c ../../test/queuetest.c ../../test/threadtest.c ../../test/tt3.c ../../test/synchtest.c ../../test/malloctest.c ../../test/fstest.c ../../compile/ASST0/autoconf.c > depend.mk
+bkravche@linux028:~/cs350-os161/os161-1.11/kern/compile/ASST0$ make
+cs350-gcc   -mno-abicalls -fno-pic -Wall -W -Wwrite-strings -g -nostdinc -I../../include -I../../dev -I.  -ffreestanding -D_KERNEL -G 0 -c ../../main/main.c
+../../main/main.c: In function ‘shutdown’:
+../../main/main.c:6: warning: implicit declaration of function ‘kprintf’
+../../main/main.c:8: warning: implicit declaration of function ‘vfs_clearbootfs’
+../../main/main.c:9: warning: implicit declaration of function ‘vfs_clearcurdir’
+../../main/main.c:10: warning: implicit declaration of function ‘vfs_unmountall’
+../../main/main.c:12: warning: implicit declaration of function ‘splhigh’
+../../main/main.c:14: warning: implicit declaration of function ‘scheduler_shutdown’
+../../main/main.c:15: warning: implicit declaration of function ‘thread_shutdown’
+../../main/main.c: In function ‘sys_reboot’:
+../../main/main.c:31: error: ‘RB_REBOOT’ undeclared (first use in this function)
+../../main/main.c:31: error: (Each undeclared identifier is reported only once
+../../main/main.c:31: error: for each function it appears in.)
+../../main/main.c:32: error: ‘RB_HALT’ undeclared (first use in this function)
+../../main/main.c:33: error: ‘RB_POWEROFF’ undeclared (first use in this function)
+../../main/main.c:36: error: ‘EINVAL’ undeclared (first use in this function)
+../../main/main.c:44: warning: implicit declaration of function ‘md_halt’
+../../main/main.c:48: warning: implicit declaration of function ‘md_reboot’
+../../main/main.c:52: warning: implicit declaration of function ‘md_poweroff’
+../../main/main.c:56: warning: implicit declaration of function ‘panic’
+../../main/main.c: In function ‘kmain’:
+../../main/main.c:67: warning: implicit declaration of function ‘boot’
+../../main/main.c:69: warning: implicit declaration of function ‘menu’
+make: *** [main.o] Error 1
+bkravche@linux028:~/cs350-os161/os161-1.11/kern/compile/ASST0$ cd ~/cs350-os161/os161-1.11/kern/main
+bkravche@linux028:~/cs350-os161/os161-1.11/kern/main$ rm main.c
+bkravche@linux028:~/cs350-os161/os161-1.11/kern/main$ cvs update -d main.c
+cvs update: warning: `main.c' was lost
+U main.c
+bkravche@linux028:~/cs350-os161/os161-1.11/kern/main$ cd ../compile/ASST0/
+bkravche@linux028:~/cs350-os161/os161-1.11/kern/compile/ASST0$ make depend
+cs350-gcc   -mno-abicalls -fno-pic -Wall -W -Wwrite-strings -g -nostdinc -I../../include -I../../dev -I.  -ffreestanding -D_KERNEL -G 0 -M ../../dev/lamebus/lhd.c ../../dev/lamebus/emu.c ../../dev/generic/random.c ../../dev/generic/rtclock.c ../../dev/generic/pseudorand.c ../../dev/lamebus/ltrace.c ../../dev/lamebus/lamebus.c ../../dev/generic/console.c ../../dev/lamebus/lser.c ../../dev/generic/beep.c ../../dev/lamebus/lrandom.c ../../dev/lamebus/ltimer.c ../../dev/lamebus/rtclock_ltimer.c ../../dev/lamebus/emu_att.c ../../dev/lamebus/random_lrandom.c ../../dev/lamebus/beep_ltimer.c ../../dev/lamebus/ltrace_att.c ../../dev/generic/pseudorand_att.c ../../dev/lamebus/con_lser.c ../../dev/lamebus/lrandom_att.c ../../dev/lamebus/lser_att.c ../../dev/lamebus/lhd_att.c ../../dev/lamebus/ltimer_att.c ../../fs/sfs/sfs_io.c ../../fs/sfs/sfs_fs.c ../../fs/sfs/sfs_vnode.c ../../arch/mips/mips/dumbvm.c ../../arch/mips/mips/cache_mips1.S ../../arch/mips/mips/exception.S ../../arch/mips/mips/lamebus_mips.c ../../arch/mips/mips/interrupt.c ../../arch/mips/mips/pcb.c ../../arch/mips/mips/ram.c ../../arch/mips/mips/spl.c ../../arch/mips/mips/start.S ../../arch/mips/mips/switch.S ../../arch/mips/mips/syscall.c ../../arch/mips/mips/threadstart.S ../../arch/mips/mips/trap.c ../../arch/mips/mips/tlb_mips1.S ../../../lib/libc/mips-setjmp.S ../../lib/copyinout.c ../../lib/array.c ../../lib/bitmap.c ../../lib/queue.c ../../lib/kheap.c ../../lib/kprintf.c ../../lib/kgets.c ../../lib/misc.c ../../lib/ntoh.c ../../../lib/libc/__printf.c ../../../lib/libc/snprintf.c ../../../lib/libc/atoi.c ../../../lib/libc/bzero.c ../../../lib/libc/memcpy.c ../../../lib/libc/memmove.c ../../../lib/libc/strcat.c ../../../lib/libc/strchr.c ../../../lib/libc/strcmp.c ../../../lib/libc/strcpy.c ../../../lib/libc/strlen.c ../../../lib/libc/strrchr.c ../../../lib/libc/strtok_r.c ../../dev/init.c ../../fs/vfs/device.c ../../fs/vfs/vfscwd.c ../../fs/vfs/vfslist.c ../../fs/vfs/vfslookup.c ../../fs/vfs/vfspath.c ../../fs/vfs/vnode.c ../../fs/vfs/devnull.c ../../thread/hardclock.c ../../thread/synch.c ../../thread/scheduler.c ../../thread/thread.c ../../main/main.c ../../main/menu.c ../../main/hello.c ../../userprog/loadelf.c ../../userprog/runprogram.c ../../userprog/uio.c ../../test/arraytest.c ../../test/bitmaptest.c ../../test/queuetest.c ../../test/threadtest.c ../../test/tt3.c ../../test/synchtest.c ../../test/malloctest.c ../../test/fstest.c ../../compile/ASST0/autoconf.c > depend.mk
+bkravche@linux028:~/cs350-os161/os161-1.11/kern/compile/ASST0$ make
+cs350-gcc   -mno-abicalls -fno-pic -Wall -W -Wwrite-strings -g -nostdinc -I../../include -I../../dev -I.  -ffreestanding -D_KERNEL -G 0 -c ../../main/main.c
+../../main/main.c: In function ‘boot’:
+../../main/main.c:94: warning: implicit declaration of function ‘hello’
+../../conf/newvers.sh ASST0
+*** This is ASST0 build #4 ***
+cs350-gcc   -mno-abicalls -fno-pic -Wall -W -Wwrite-strings -g -nostdinc -I../../include -I../../dev -I.  -ffreestanding -D_KERNEL -G 0 -c vers.c
+cs350-ld   -nostdlib -Ttext 0x80001000 -T ../../arch/mips/conf/ldscript -G 0 lhd.o emu.o random.o rtclock.o pseudorand.o ltrace.o lamebus.o console.o lser.o beep.o lrandom.o ltimer.o rtclock_ltimer.o emu_att.o random_lrandom.o beep_ltimer.o ltrace_att.o pseudorand_att.o con_lser.o lrandom_att.o lser_att.o lhd_att.o ltimer_att.o sfs_io.o sfs_fs.o sfs_vnode.o dumbvm.o cache_mips1.o exception.o lamebus_mips.o interrupt.o pcb.o ram.o spl.o start.o switch.o syscall.o threadstart.o trap.o tlb_mips1.o mips-setjmp.o copyinout.o array.o bitmap.o queue.o kheap.o kprintf.o kgets.o misc.o ntoh.o __printf.o snprintf.o atoi.o bzero.o memcpy.o memmove.o strcat.o strchr.o strcmp.o strcpy.o strlen.o strrchr.o strtok_r.o init.o device.o vfscwd.o vfslist.o vfslookup.o vfspath.o vnode.o devnull.o hardclock.o synch.o scheduler.o thread.o main.o menu.o hello.o loadelf.o runprogram.o uio.o arraytest.o bitmaptest.o queuetest.o threadtest.o tt3.o synchtest.o malloctest.o fstest.o autoconf.o vers.o -o kernel
+cs350-size kernel
+   text	   data	    bss	    dec	    hex	filename
+ 160824	    448	   7668	 168940	  293ec	kernel
+bkravche@linux028:~/cs350-os161/os161-1.11/kern/compile/ASST0$ exit
+exit
+
+Script done on Thu 15 Sep 2011 05:19:19 PM EDT

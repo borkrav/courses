@@ -1,0 +1,112 @@
+4
+nickel
+dime
+loonie
+quarter
+26
+start
+a1
+a2
+a3
+a4
+a5
+a6
+a7
+a8
+a9
+a10
+a11
+a12
+a13
+a14
+a15
+a16
+a17
+a18
+a19
+a20
+a21
+a22
+a23
+a24
+a25
+start
+1
+a25
+76
+start nickel a1
+a1 nickel a2
+a2 nickel a3
+a3 nickel a4
+a4 nickel a5
+a5 nickel a6
+a6 nickel a7
+a7 nickel a8
+a8 nickel a9
+a9 nickel a10
+a10 nickel a11
+a11 nickel a12
+a12 nickel a13
+a13 nickel a14
+a14 nickel a15
+a15 nickel a16
+a16 nickel a17
+a17 nickel a18
+a18 nickel a19
+a19 nickel a20
+a20 nickel a21
+a21 nickel a22
+a22 nickel a23
+a23 nickel a24
+a24 nickel a25
+start dime a2
+a1 dime a3
+a2 dime a4
+a3 dime a5
+a4 dime a6
+a5 dime a7
+a6 dime a8
+a7 dime a9
+a8 dime a10
+a9 dime a11
+a10 dime a12
+a11 dime a13
+a12 dime a14
+a13 dime a15
+a14 dime a16
+a15 dime a17
+a16 dime a18
+a17 dime a19
+a18 dime a20
+a19 dime a21
+a20 dime a22
+a21 dime a23
+a22 dime a24
+a23 dime a25
+start quarter a5
+a1 quarter a6
+a2 quarter a7
+a3 quarter a8
+a4 quarter a9
+a5 quarter a10
+a6 quarter a11
+a7 quarter a12
+a8 quarter a13
+a9 quarter a14
+a10 quarter a15
+a11 quarter a16
+a12 quarter a17
+a13 quarter a18
+a14 quarter a19
+a15 quarter a20
+a16 quarter a21
+a17 quarter a22
+a18 quarter a23
+a19 quarter a24
+a20 quarter a25
+start loonie a20
+a1 loonie a21
+a2 loonie a22
+a3 loonie a23
+a4 loonie a24
+a5 loonie a25

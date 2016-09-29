@@ -1,0 +1,255 @@
+------------------------------TEST 1------------------------------
+
+INPUT:
+1. ./phil -1 -1 -1
+2. ./phil 1
+3. ./phil 1 0
+4. ./phil 2 0
+5. ./phil 1 0 0
+6. ./phil 2 0 0
+7. ./phil 2 1 0
+
+EXPLANATION:
+Tests that check the error handling of the input. All tests should return an error message.
+
+OUTPUT:
+
+Script started on Mon 11 Mar 2013 06:16:59 PM EDT
+bkravche@linux024:~/cs343/A04$ ./phil -1 -1 -1
+Usage: ./phil [ philosophers (> 1) [ noodles (> 0) [ Seed (> 0) ] ] ]
+bkravche@linux024:~/cs343/A04$ ./phil 1
+Usage: ./phil [ philosophers (> 1) [ noodles (> 0) [ Seed (> 0) ] ] ]
+bkravche@linux024:~/cs343/A04$ ./phil 1 0
+Usage: ./phil [ philosophers (> 1) [ noodles (> 0) [ Seed (> 0) ] ] ]
+bkravche@linux024:~/cs343/A04$ ./phil 2 0
+Usage: ./phil [ philosophers (> 1) [ noodles (> 0) [ Seed (> 0) ] ] ]
+bkravche@linux024:~/cs343/A04$ ./phil 1 0 0
+Usage: ./phil [ philosophers (> 1) [ noodles (> 0) [ Seed (> 0) ] ] ]
+bkravche@linux024:~/cs343/A04$ ./phil 2 0 0
+Usage: ./phil [ philosophers (> 1) [ noodles (> 0) [ Seed (> 0) ] ] ]
+bkravche@linux024:~/cs343/A04$ ./phil 2 1 0
+Usage: ./phil [ philosophers (> 1) [ noodles (> 0) [ Seed (> 0) ] ] ]
+bkravche@linux024:~/cs343/A04$ exit
+exit
+
+Script done on Mon 11 Mar 2013 06:17:16 PM EDT
+
+ANALYSIS:
+All tests returned an error message, therefore everything passed correctly
+
+
+------------------------------TEST 2------------------------------
+
+
+INPUT:
+1. ./phil 2
+2. ./phil 2 1
+3. ./phil 2 1 1
+4. ./phil
+
+EXPLANATION:
+Tests that check permutations of correct input
+
+Script started on Mon 11 Mar 2013 06:20:30 PM EDT
+bkravche@linux024:~/cs343/A04$ ./phil 2
+Phil0	Phil1	
+******	******	
+H		
+E1,29	H	
+T	W1,0	
+H	E5,25	
+W0,1	T	
+E1,28		
+T	H	
+H	E4,21	
+E5,23	T	
+T	H	
+	E2,19	
+	T	
+H	H	
+E3,20	W1,0	
+T	E1,18	
+	T	
+H	H	
+E2,18		
+T	E2,16	
+H	T	
+E4,14		
+T	H	
+	E5,11	
+H	T	
+E3,11	H	
+T	E4,7	
+	T	
+	H	
+	E5,2	
+H	T	
+	H	
+W0,1	E1,1	
+E1,10	T	
+T	H	
+	E1,0	
+...	F	
+H		
+E5,5		
+T		
+H		
+E2,3		
+T		
+H		
+E1,2		
+T		
+H		
+E1,1		
+T		
+H		
+E1,0		
+F	...	
+***********************
+Philosophers terminated
+bkravche@linux024:~/cs343/A04$ ./phil 2 1
+Phil0	Phil1	
+******	******	
+H	H	
+W0,1	E1,0	
+...	F	
+E1,0		
+F	...	
+***********************
+Philosophers terminated
+bkravche@linux024:~/cs343/A04$ ./phil 2 1 1
+Phil0	Phil1	
+******	******	
+H	H	
+	E1,0	
+...	F	
+E1,0		
+F	...	
+***********************
+Philosophers terminated
+bkravche@linux024:~/cs343/A04$ ./phil
+Phil0	Phil1	Phil2	Phil3	Phil4	
+******	******	******	******	******	
+H					
+E4,26	H	H	H	H	
+T	W1,2	W2,3	E5,25	W4,0	
+	E5,25				
+	T	E1,29	T	E3,27	
+H		T		T	
+E4,22					
+T				H	
+		H		E2,25	
+	H	E2,27		T	
+				H	
+		T		E1,24	
+	E4,21		H	T	
+H	T		E3,22		
+E5,17			T		
+			H		
+T			E2,20		
+			T		
+			H	H	
+		H	E3,17	W4,0	
+			T	E3,21	
+		E4,23	H	T	
+	H	T	W3,4		
+	E4,17	H	E5,12		
+H	T		T	H	
+E2,15		E3,20		W4,0	
+T				E1,20	
+		T		T	
+				H	
+				E5,15	
+			H	T	
+			E3,9		
+H			T		
+E5,10	H				
+T	E2,15				
+H	T	H			
+E2,8			H		
+			E5,4		
+		E2,18	T		
+T	H	T		H	
+	E1,14			E5,10	
+H	T				
+W0,1				T	
+E1,7					
+T					
+H			H		
+			E3,1		
+E1,6			T		
+T					
+H				H	
+E1,5	H	H			
+T		E4,14		E5,5	
+	E2,12	T	H	T	
+	T		E1,0		
+...	...	...	F	...	
+	H				
+	E4,8				
+H	T				
+	H				
+W0,1	E2,6	H		H	
+E1,4	T	E2,12		W4,0	
+T					
+H				E1,4	
+W0,1	H	T			
+	E5,1			T	
+E3,1	T				
+T		H			
+		E3,9			
+H		T			
+E1,0	H	H		H	
+F	...	...	...	...	
+		E3,6		E2,2	
+	E1,0	T		T	
+				H	
+				E1,1	
+...	F	...	...	...	
+		H		T	
+		E3,3			
+		T		H	
+				E1,0	
+...	...	...	...	F	
+		H			
+		E2,1			
+		T			
+		H			
+		E1,0			
+...	...	F	...	...	
+***********************
+Philosophers terminated
+bkravche@linux024:~/cs343/A04$ exit
+exit
+
+Script done on Mon 11 Mar 2013 06:21:06 PM EDT
+
+ANALYSIS:
+There were no error messages, the output is formatted correctly, and none of my asserts were triggered. Furthermore, the outputted tables display reasonable results (two philosophers beside each other are not eating at the same time). Therefore, the tests passed
+
+
+------------------------------TEST 3------------------------------
+
+INPUT:
+
+./phil 2000 2000 2000 > output
+tail -1 output
+
+EXPLANATION:
+A big test that, with a high probability, ensures that there are no synchronisation or mutual exclusion issues. The last line of output should say "Philosophers terminated".
+
+
+OUTPUT:
+
+Script started on Mon 11 Mar 2013 06:35:01 PM EDT
+bkravche@linux024:~/cs343/A04$ ./phil 2000 2000 2000 > output
+bkravche@linux024:~/cs343/A04$ tail -1 output
+Philosophers terminated
+bkravche@linux024:~/cs343/A04$ exit
+exit
+
+Script done on Mon 11 Mar 2013 06:36:00 PM EDT
+bkravche@linux024:~/cs343/A04$ 
+
+ANALYSIS:
+Since the execution finished successfully, there were no assertions raised or errors. Therefore, there were no mutual exclusion violations, or instanses where two adjacent philosophers where eating at the same time. Therefore, this test passed.

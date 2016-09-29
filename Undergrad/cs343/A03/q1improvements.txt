@@ -1,0 +1,3 @@
+A queue that's implemented to be accessible by multiple reducers at the same time would have made this framework much more efficient, since the data would be consumed right as it's available, and less waiting and yielding would be happening
+
+

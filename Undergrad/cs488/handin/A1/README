@@ -1,0 +1,24 @@
+Name: Boris Kravchenko 
+Student Number: 20332359
+User-id: bkravche
+Assignment: 1
+
+The final executable was compiled on this machine: 
+gl07.student.cs.uwaterloo.ca
+
+How to invoke my program: 
+Run ./game488
+
+How to use my extra features: 
+
+
+I have created the following data files, which are in the data directory:
+
+
+My program assumes the following:
+ 
+You can only rotate on one axis at any given time, ie you can't hold 
+down LMB and RMB and have a multi-axis rotation
+
+Scaling stops on mouse release, regardless of the status of the Shift key
+

@@ -1,0 +1,80 @@
+rpcCall
+	-char* name
+	-int* argTypes
+	-void** args
+
+EXECUTE name, argTypes, args
+
+EXECUTE_SUCCESS name, argTypes, args
+
+EXECUTE_FAILURE reasonCode
+
+rpcRegister
+	-char* name
+	-int* argTypes
+	-skeleton f
+
+REGISTER host, port, name, argTypes
+
+LOC_REQUEST name, argTypes
+
+LOC_SUCCESS host, port
+
+LOC_FAILURE reasonCode
+
+TERMINATE
+
+
+
+struct message
+	int type
+	string host
+	string port
+	string name
+	string reasoncode
+	int* argTypes
+	void** args
+
+
+
+Client
+	- send location request to binder
+	- then send execute request to server
+	- connect to one, send message, close socket, reuse socket to connect to other
+
+Binder
+	- spin up thread for every connection accept
+	- for server connections, hold connections open, sleep on recv in case of additional registrations
+	- have one dedicated thread that gets notified of system shutdown (CV) and tells all servers to terminate. The above threads will then wake up and die
+	- for client connections, service request and quit immediatly
+
+Server
+	-connect to binder on socket
+	-accept connections from clients on another socket
+
+Write networking.h/cpp
+	-create listening socket
+	-create a connection
+
+
+
+Registration
+Name Socket Host Port Signature
+
+insert new record
+	- overwrite entry with same name and signature
+
+query all records with same name and signature
+
+
+
+ASSUMPTION - behaviour not defined in specification
+	if server is running a time consuming operation, then another client calls terminate, the function is cancelled
+
+Todo:
+read spec over carefully, finish error cases
+retest, seeing all error/warning
+write doc
+submit
+
+

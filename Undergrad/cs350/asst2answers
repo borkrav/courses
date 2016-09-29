@@ -1,0 +1,29 @@
+1. 
+
+copyin copies a block of specified length from user level adress to kernel adress
+
+copyout copies a block of specified length from kernel adress to user level adress
+
+2.
+
+UIO_USERISPACE is executable segment in the user address space, UIOUSERSPACE is a non-executable segment in the user address space, and UIO_SYSSPACE is a segment in the kernel address space 
+
+3.
+
+vfs_close() closes the ELF file that contains the executable for the program being run. This is done so source code can't be changed from user mode
+
+4.
+
+md_usermode
+
+5. pointer to a segment in the user adress space
+
+6. Because the current implementation does kernel panic, which means that calling kill_curthread would crash the whole kernel
+
+7. When mips_syscall is invoked, interrupts are enabled. When kill_curthread is called interrups are probably on
+
+8. vfs_open
+
+9. close, open, reclaim, read, readlink, getdirentry, write, ioctl, stat, gettype, tryseek, dsynch, mmap, truncate, namefile, create, symlink, mkdir, link, remove, rmdir, rename, lookup, lookupparent, check, incref, decref, incopen, decopen, init, kill. 
+
+When two processes open the same file, the same vnode may be used

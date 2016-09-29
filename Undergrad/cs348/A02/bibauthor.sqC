@@ -1,0 +1,245 @@
+#include <iostream>
+#include "util.h"
+#include <stdlib.h>
+#include <vector>
+#include <string.h>
+
+using namespace std;
+
+EXEC SQL INCLUDE SQLCA; 
+
+int main(int argc, char *argv[]) {
+	char * getpass();
+	string myLine;
+    vector <string> listOfPublications;
+
+	EXEC SQL BEGIN DECLARE SECTION;
+	char db[6] = "cs348";
+    char result[100];
+   
+    sqlint32 pk;
+    char charPk[10];
+    char name[22];
+    char url[42];
+
+    char title[70];
+    char publisher[50];
+    char appearsin[10];
+    sqlint32 author;
+    sqlint32 order;
+    sqlint32 year;
+    sqlint32 startpage;
+    sqlint32 endpage;
+    sqlint32 volume;
+    sqlint32 number;
+    
+    
+	EXEC SQL END DECLARE SECTION;
+   
+	EXEC SQL WHENEVER SQLERROR  GO TO error;
+	EXEC SQL CONNECT TO :db;   
+   
+    getline(cin,myLine);
+    
+    
+    strcpy(name,myLine.c_str());
+    
+    
+    EXEC SQL 
+    DECLARE C1 CURSOR FOR
+    
+    select d.pubid from 
+    ((select pubid, year from proceedings) union (select pubid, year from journal) union (select pubid, year from book)) c 
+    right join 
+    (select a.pubid, a.title, b.firstAuthor 
+     from (select pubid, title from publication where pubid in (select pubid from author, wrote where author.name = :name and author.aid = wrote.aid)) a, 
+     (select author.name as firstAuthor, pubid from author, wrote where aorder = '1' and author.aid = wrote.aid) b 
+     where a.pubid = b.pubid) d 
+    on c.pubid = d.pubid 
+    order by d.firstAuthor, c.year;    
+    
+    EXEC SQL 
+    OPEN C1;
+    
+    for( ;; ) {
+        
+        EXEC SQL
+        FETCH C1 INTO :result;
+        if (SQLCODE == 100) break;
+        else if (SQLCODE < 0 ) break;
+        string resultString = result;
+        listOfPublications.push_back(resultString);
+        
+    }
+    
+    EXEC SQL 
+    CLOSE C1;
+    
+    
+    for (int i = 0; i < listOfPublications.size(); i++){
+        
+        string typeOfPublication;
+        
+        strcpy(charPk,listOfPublications[i].c_str());
+        
+        cout << "Pubid: " << listOfPublications[i] << endl;
+        
+  
+        EXEC SQL
+            SELECT pubid into :result
+            FROM journal
+            WHERE pubid = :charPk;
+        
+        if (SQLCODE != 100){
+            typeOfPublication = "journal";
+        }
+        
+        EXEC SQL
+        SELECT pubid into :result
+        FROM article
+        WHERE pubid = :charPk;
+        
+        if (SQLCODE != 100){
+            typeOfPublication = "article";
+        }
+        EXEC SQL
+        SELECT pubid into :result
+        FROM book
+        WHERE pubid = :charPk;
+        
+        if (SQLCODE != 100){
+            typeOfPublication = "book";
+        }
+        EXEC SQL
+        SELECT pubid into :result
+        FROM proceedings
+        WHERE pubid = :charPk;
+        
+        if (SQLCODE != 100){
+            typeOfPublication = "proceedings";
+        }
+        
+        cout << "Type: " << typeOfPublication << endl;
+        
+        
+        cout << "Authors: ";
+        
+        EXEC SQL
+            DECLARE C2 CURSOR FOR
+            SELECT author.name
+            FROM author, wrote 
+            WHERE author.aid = wrote.aid
+            AND wrote.pubid = :charPk 
+            ORDER BY aorder;
+        
+        EXEC SQL 
+        OPEN C2;
+        
+        string resultString;
+        int resultInt; 
+        
+        for( ;; ) {
+            
+            EXEC SQL
+            FETCH C2 INTO :result;
+            if (SQLCODE == 100) break;
+            else if (SQLCODE < 0 ) break;
+            resultString = result;
+            cout << resultString;
+        }
+        
+        cout << endl;
+        
+        EXEC SQL 
+        CLOSE C2;
+        
+        EXEC SQL
+            SELECT title into :result
+            FROM publication
+            WHERE pubid = :charPk;
+        
+        
+        resultString = result;
+        cout << "Title: " << resultString << endl; 
+        
+        
+        if (typeOfPublication == "book"){
+            EXEC SQL
+                SELECT publisher, year into :publisher, :year
+                FROM book
+                WHERE pubid = :charPk;
+            
+            resultString = publisher;
+            cout << "Publisher: " << resultString << endl;
+            cout << "Year: " << year << endl;
+        }
+        
+        else if (typeOfPublication == "proceedings"){
+            EXEC SQL
+                SELECT year into :year
+                FROM proceedings
+                WHERE pubid = :charPk;
+            
+            cout << "Year: " << year << endl;
+        }
+        
+        else if (typeOfPublication == "journal"){
+            EXEC SQL
+                SELECT volume, number, year into :volume, :number, :year
+                FROM journal
+                WHERE pubid = :charPk;
+            
+            cout << "Volume: " << volume << endl;
+            cout << "Number: " << number << endl;
+            cout << "Year: " << year << endl;
+        }
+        
+        else if (typeOfPublication == "article"){
+            EXEC SQL
+                SELECT appearsin, startpage, endpage into :appearsin, :startpage, :endpage
+                FROM article
+                WHERE pubid = :charPk;
+            
+            string temp = appearsin;
+            
+            strcpy(charPk,temp.c_str());
+
+            
+            
+            EXEC SQL
+            SELECT title into :result
+                FROM publication
+                WHERE pubid = :charPk;
+            
+            resultString = result;
+            
+            cout << "In: " << resultString << endl;
+            cout << "Pages: " << startpage << " - " << endpage << endl;
+        }
+        
+        cout << endl;
+        
+        
+    }
+    
+	
+	EXEC SQL COMMIT;
+	EXEC SQL CONNECT reset;
+	
+	exit(0);
+	
+error:
+	check_error("Bad input",&sqlca);
+	EXEC SQL WHENEVER SQLERROR CONTINUE;
+
+	EXEC SQL ROLLBACK;
+	EXEC SQL CONNECT reset;
+	exit(1);
+	
+	
+	
+}
+	
+
+
+

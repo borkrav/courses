@@ -1,0 +1,40 @@
+I = imread('catBW.jpg');
+I = im2double(I);
+
+
+[A, drop] = Compress(I, 0);
+[B, drop] = Compress(I, 0.009);
+[C, drop] = Compress(I, 0.015);
+[D, drop] = Compress(I, 0.060);
+
+subplot(2,2,1);imshow(A);title('tol 0, drop 0');
+subplot(2,2,2);imshow(B);title('tol 0.009, drop 0.4');
+subplot(2,2,3);imshow(C);title('tol 0.015, drop 0.5');
+subplot(2,2,4);imshow(D);title('tol 0.060, drop 0.7');
+
+erra = 0;
+errb = 0;
+errc = 0;
+errd = 0;
+
+for i=numel(I)
+    erra=erra+(I(i)-A(i))^2;
+    errb=errb+(I(i)-B(i))^2;
+    errc=errc+(I(i)-C(i))^2;
+    errd=errd+(I(i)-D(i))^2;
+end
+
+erra = erra/numel(I);
+errb = errb/numel(I);
+errb = errb/numel(I);
+errb = errb/numel(I);
+
+erra = erra/max(I(:))-min(I(:));
+errb = errb/max(I(:))-min(I(:));
+errc = errc/max(I(:))-min(I(:));
+errd = errd/max(I(:))-min(I(:));
+
+a= 0; b=0.4;c=0.5;d=0.7
+
+
+

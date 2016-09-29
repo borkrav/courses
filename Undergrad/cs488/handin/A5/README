@@ -1,0 +1,57 @@
+Name: Boris Kravchenko 
+Student Number: 20332359
+User-id: bkravche
+Assignment: 5
+
+The final executable was compiled on this machine: 
+	gl01.student.cs.uwaterloo.ca
+
+How to invoke my program: 
+	Run ./rt scene.lua
+
+How to use my extra features: 
+	Run ./rt scene.lua n
+
+	n = number of threads you wish to use (optional)
+			defaults to the number of cores on CPU
+
+I have created the following data files, which are in the data directory:
+
+	Scene files:
+	antialiasing.lua - demonstrates anti-aliasing
+	box.lua - demonstrates Fresnel reflections		     
+	csg.lua	- demonstrates CSG	    
+	depthOfField.lua - demonstrates depth of field
+	finalScene.lua - final scene
+	glass_cow.lua - a glass cow
+	glossyRefl.lua - demonstrates glossy reflections
+	mirrorRefl.lua - demonstrates mirror reflections
+	nonhier.lua - demonstrates almost all objectives
+	refraction.lua - demonstrates refraction
+	softShadow.lua - demonstrates soft shadows 
+
+	Each of these files can be modified to turn the specified objective on or off,
+	pease refer to the manual
+
+	19 .png image files demonstrating objectives
+
+	All other files support the lua files
+	
+
+My program assumes the following:
+
+
+Objectives:
+
+1:	Depth of field is implemented 
+2:	Glossy reflections are implemented
+3:	CSG is implemented, including union, intersection and difference
+4:	Bump mapping is implemented
+5:	Mirror reflections are implemented
+6:	Refractions are implemented, and are physically correct according to Fresnel’s
+ 		equations
+7:	Super sampling anti-aliasing is implemented, with no jagged edges visible
+8:	Area lights and soft shadows are implemented
+9: 	The final scene is modeled
+10:	Additional primitives are added, including cylinder and cone
+

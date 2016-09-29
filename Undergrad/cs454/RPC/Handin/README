@@ -1,0 +1,10 @@
+By:
+Boris Kravchenko - bkravche
+Michael Gamble - mlgamble
+
+Dependencies:
+lpthread
+
+How to Compile:
+g++ -L. client.o -lrpc -o client
+g++ -L. server_functions.o server_function_skels.o server.o -lrpc -lpthread -o server

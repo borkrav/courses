@@ -1,0 +1,148 @@
+------------------------------TEST 1------------------------------
+
+INPUT:
+
+1 ./cardgame
+2 ./cardgame 2
+3 ./cardgame 1 10
+4 ./cardgame -1
+5 ./cardgame -1 -1
+6 ./cardgame 10 0
+7 ./cardgame 9999 10
+
+EXPLANATION:
+1. Simple case with no input. 
+		- Tests q1main.cc line 38
+2. Case with one input. Result should have two games. 
+		- Tests q1main.cc line 28
+3. Case with two inputs. Result should have 1 game. 
+		- Tests q1main.cc line 18
+4. Tests error case with one input. Result should show error.
+		- Tests q1main.cc line 29
+5. Tests error case with two inputs. Result should show error.
+		- Tests q1main.cc line 19
+6. Tests error case with one good input and one bad input - seed zero
+7. Tests large number of games, makes sure the memory management is sound
+
+TEST:
+	- note, input 3 and 7 are ran on both sample solution and my solution, and outputs are diffed
+
+
+Script started on Mon 04 Feb 2013 05:42:22 PM EST
+bkravche@linux028:~/cs343/A02$ ./cardgame 
+Players: 5    Cards: 24
+P0	P1	P2	P3	P4	
+	7:12>	4:19<	1:23<		
+	5:0#	7:5<			
+
+
+Players: 9    Cards: 187
+P0	P1	P2	P3	P4	P5	P6	P7	P8	
+					7:180>	3:177<			
+				3:172>	2:175<				
+					2:170>	1:169<			
+			7:152>	4:159<	6:163<				
+		1:142>	2:143<	7:145<					
+			8:134>	2:132>	4:128>	1:127<			
+					5:122>	1:121<			
+				1:112>	8:113<				
+					4:108>	1:107<			
+					5:102>	5:97<			
+					1:96>	6:90>	3:87<		
+						3:84>	3:81<		
+					1:76>	4:77<			
+						6:70>	1:69<		
+						1:68>	1:67<		
+						1:66>	2:64>	3:61<	
+	3:38>	2:41<	4:43<	2:47<	2:49<	2:51<	8:53<		
+		4:34>	5:29<						
+		5:24>	4:20>	2:18>	1:17<				
+				7:10>	4:6>	6:0#			
+
+
+Players: 6    Cards: 12
+P0	P1	P2	P3	P4	P5	
+				7:0#	5:7<	
+
+
+Players: 9    Cards: 118
+P0	P1	P2	P3	P4	P5	P6	P7	P8	
+4:108>	6:102>	7:95<						6:112>	
+	7:88>	8:80>	7:73<						
+2:65<	4:67<	2:71<					7:52>	6:59<	
+4:42>	2:40>	7:33<						6:46>	
+	3:30>	4:26>	7:19<						
+		3:16>	1:15<						
+		7:8>	8:0#						
+
+
+Players: 6    Cards: 172
+P0	P1	P2	P3	P4	P5	
+				5:162>	5:167<	
+6:150>	1:149<				6:156>	
+4:145<			7:126>	4:133<	8:137<	
+				6:120>	1:119<	
+1:107<				5:114>	6:108>	
+1:101<					5:102>	
+		7:74>	6:81<	8:87<	6:95<	
+			2:72>	5:67<		
+			3:64>	5:59<		
+		5:48>	6:53<			
+			4:44>	5:39<		
+			3:36>	3:33<		
+		7:20>	6:27<			
+		5:10>	5:15<			
+		5:0#	5:5<			
+bkravche@linux028:~/cs343/A02$ ./cardgame 2
+Players: 8    Cards: 171
+P0	P1	P2	P3	P4	P5	P6	P7	
+					5:166>	5:161<		
+1:145<					7:154>	6:148>	2:146>	
+						1:142>	2:143<	
+3:137<							2:140>	
+						1:130>	6:131<	
+					7:116>	4:123<	3:127<	
+					1:110>	5:111<		
+						8:102>	7:95<	
+			3:78>	4:81<	6:85<	4:91<		
+			1:76>	1:77<				
+7:53<				4:72>	2:70>	8:62>	2:60>	
+						3:42>	8:45<	
+3:37<							2:40>	
+		5:0#	6:5<	6:11<	8:17<	4:25<	8:29<	
+
+
+Players: 4    Cards: 169
+P0	P1	P2	P3	
+7:162>	7:155<			
+8:147<	3:130>	8:133<	6:141<	
+	5:118>	7:123<		
+6:105<	2:111<	5:113<	6:99<	
+	1:96>	2:97<		
+7:84>	4:91<	1:95<		
+5:76>	3:81<			
+	2:74>	5:69<		
+8:46>	7:62>	6:56>	2:54>	
+	4:42>	5:37<		
+2:29<	6:31<	8:17<	4:25<	
+3:7<	1:16>	4:12>	2:10>	
+			7:0#	
+bkravche@linux028:~/cs343/A02$ ./cardgame 1 10 &> o1
+bkravche@linux028:~/cs343/A02$ ./Original/cardgame 1 10 &> o2
+bkravche@linux028:~/cs343/A02$ diff o1 o2
+bkravche@linux028:~/cs343/A02$ ./cardgame -1
+Usage: ./cardgame [ number-of-games ( >= 0 ) [ random-seed ( > 0 ) ] ]
+bkravche@linux028:~/cs343/A02$ ./cardgame -1 -1
+Usage: ./cardgame [ number-of-games ( >= 0 ) [ random-seed ( > 0 ) ] ]
+bkravche@linux028:~/cs343/A02$ ./cd[Kardgame 10 0
+Usage: ./cardgame [ number-of-games ( >= 0 ) [ random-seed ( > 0 ) ] ]
+bkravche@linux028:~/cs343/A02$ ./cardgame 9999 10 > [K[K&> o3
+bkravche@linux028:~/cs343/A02$ ./cardgame 9999 10 &> o3[C[1@O[8@riginal/[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K4
+bkravche@linux028:~/cs343/A02$ diff o3 o4 
+bkravche@linux028:~/cs343/A02$ exit
+exit
+
+Script done on Mon 04 Feb 2013 05:43:33 PM EST
+
+ANALYSIS:
+All inputs gave the correct outputs

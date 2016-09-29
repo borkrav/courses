@@ -1,0 +1,41 @@
+a)
+
+MULTI
+shared:12252538
+shared:7421803
+shared:7761891
+shared:8038730
+shared:7446505
+shared:7742440
+shared:7438304
+shared:7418938
+shared:7427780
+shared:7439735
+
+SINGLE
+shared:16078604
+shared:16648060
+shared:16183889
+shared:17584456
+shared:15157794
+shared:18889582
+shared:20000000
+shared:15012655
+shared:15077854
+shared:13196138
+
+
+b) No, 10 runs will very likely not produce the same results, due to the non-atomic nature of the code that increments the shared variable. The machine instructions related to the line "shared += 1" get interleaved between the two threads to a different extent every time the code is executed
+
+c) 	Max - 20000000 - there is no interference between the two threads, all increments end up being atomic
+		Min - 2
+
+		Thread 1 loads variable, adds 1, context switch
+		Thread 2 loads, adds and stores 9 999 999 times, context switch
+		Thread 1 stores variable, result is now 1. Context switch
+		Thread 2 loads variable, adds 1, context switch
+		Thread 1 loads, adds and stores 9 999 999 times, context switch
+		Thread 2 stores. Result is now 2. Execution ends		
+
+d) The average multiprocessor output is smaller than the average single processor output because in the single processor environment, there is less chance of scheduling interference, as the two tasks run sequentially. On the multiproccessor environment, the two tasks run in parallel, so there's a greater chance that they will interfere with one another						
+		

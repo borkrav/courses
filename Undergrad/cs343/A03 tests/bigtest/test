@@ -1,0 +1,140 @@
+
+Concurrency (computer science)
+From Wikipedia, the free encyclopedia
+
+
+The "Dining Philosophers", a classic problem involving concurrency and shared resources
+In computer science, concurrency is a property of systems in which several computations are executing simultaneously, and potentially interacting with each other. The computations may be executing on multiple cores in the same chip, preemptively time-shared threads on the same processor, or executed on physically separated processors. A number of mathematical models have been developed for general concurrent computation including Petri nets, process calculi, the Parallel Random Access Machine model, the Actor model and the Reo Coordination Language.
+Contents  [hide] 
+1 Issues
+2 Theory
+2.1 Models
+2.2 Logics
+3 Practice
+4 See also
+5 References
+6 Further reading
+7 External links
+[edit]Issues
+
+Because computations in a concurrent system can interact with each other while they are executing, the number of possible execution paths in the system can be extremely large, and the resulting outcome can be indeterminate. Concurrent use of shared resources can be a source of indeterminacy leading to issues such as deadlock, and starvation.[1]
+The design of concurrent systems often entails finding reliable techniques for coordinating their execution, data exchange, memory allocation, and execution scheduling to minimize response time and maximise throughput.[2]
+[edit]Theory
+
+Concurrency theory has been an active field of research in theoretical computer science. One of the first proposals was Carl Adam Petri's seminal work on Petri Nets in the early 1960s. In the years since, a wide variety of formalisms have been developed for modeling and reasoning about concurrency.
+[edit]Models
+A number of formalisms for modeling and understanding concurrent systems have been developed, including:[3]
+The Parallel Random Access Machine[4]
+The Actor model
+Computational bridging models such as the BSP model
+Petri nets
+Process calculi
+Tuple spaces, e.g., Linda
+SCOOP (Simple Concurrent Object-Oriented Programming)
+Reo Coordination Language
+Some of these models of concurrency are primarily intended to support reasoning and specification, while others can be used through the entire development cycle, including design, implementation, proof, testing and simulation of concurrent systems.
+The proliferation of different models of concurrency has motivated some researchers to develop ways to unify these different theoretical models. For example, Lee and Sangiovanni-Vincentelli have demonstrated that a so-called "tagged-signal" model can be used to provide a common framework for defining the denotational semantics of a variety of different models of concurrency,[5] while Nielsen, Sassone, and Winskel have demonstrated that category theory can be used to provide a similar unified understanding of different models.[6]
+The Concurrency Representation Theorem in the Actor model provides a fairly general way to represent concurrent systems that are closed in the sense that they do not receive communications from outside. (Other concurrency systems, e.g., process calculi can be modeled in the Actor model using a two-phase commit protocol.[7]) The mathematical denotation denoted by a closed system S is constructed increasingly better approximations from an initial behavior called ⊥S using a behavior approximating function progressionS to construct a denotation (meaning ) for S as follows:[8]
+DenoteS ≡ ⊔i∈ω progressionSi(⊥S)
+In this way, S can be mathematically characterized in terms of all its possible behaviors.
+[edit]Logics
+Various types of temporal logic[9] can be used to help reason about concurrent systems. Some of these logics, such as linear temporal logic and computational tree logic, allow assertions to be made about the sequences of states that a concurrent system can pass through. Others, such as action computational tree logic, Hennessy-Milner logic, and Lamport's temporal logic of actions, build their assertions from sequences of actions (changes in state). The principal application of these logics is in writing specifications for concurrent systems.[1]
+[edit]Practice
+
+
+This section does not cite any references or sources. Please help improve this section by adding citations to reliable sources. Unsourced material may be challenged and removed. (April 2007)
+Concurrent programming encompasses the programming languages and algorithms used to implement concurrent systems. Concurrent programming is usually considered to be more general than parallel programming because it can involve arbitrary and dynamic patterns of communication and interaction, whereas parallel systems generally have a predefined and well-structured communications pattern. The base goals of concurrent programming include correctness, performance and robustness. Concurrent systems such as Operating systems and Database management systems are generally designed to operate indefinitely, including automatic recovery from failure, and not terminate unexpectedly (see Concurrency control). Some concurrent systems implement a form of transparent[disambiguation needed] concurrency, in which concurrent computational entities may compete for and share a single resource, but the complexities of this competition and sharing are shielded from the programmer.
+Because they use shared resources, concurrent systems in general require the inclusion of some kind of arbiter somewhere in their implementation (often in the underlying hardware), to control access to those resources. The use of arbiters introduces the possibility of indeterminacy in concurrent computation which has major implications for practice including correctness and performance. For example arbitration introduces unbounded nondeterminism which raises issues with model checking because it causes explosion in the state space and can even cause models to have an infinite number of states.
+Some concurrent programming models include coprocesses and deterministic concurrency. In these models, threads of control explicitly yield their timeslices, either to the system or to another process.
+[edit]See also
+
+Client–server network nodes
+Cluster nodes
+Communicating sequential processes
+Concurrency control
+Concurrent computing
+Concurrent object-oriented programming
+Concurrency pattern
+Chu space
+Concurrent programming
+Distributed system nodes
+Gordon Pask
+OpenMP
+Parallel Computing
+Partitioned global address space
+Processes
+Ptolemy Project
+Sheaf (mathematics)
+Threads
+X10 (programming language)
+[edit]References
+
+^ a b Cleaveland, Rance; Scott Smolka (December, 1996). "Strategic Directions in Concurrency Research". ACM Computing Surveys 28 (4): 607. doi:10.1145/242223.242252.
+^ Campbell, Colin; Johnson, Ralph; Miller, Ade; Toub, Stephen (August 2010). Parallel Programming with Microsoft .NET. Microsoft Press. ISBN 978-0-7356-5159-3.
+^ Filman, Robert; Daniel Friedman (1984). Coordinated Computing - Tools and Techniques for Distributed Software. McGraw-Hill. ISBN 0-07-022439-0.
+^ Keller, Jörg; Christoph Keßler, Jesper Träff (2001). Practical PRAM Programming. John Wiley and Sons.
+^ Lee, Edward; Alberto Sangiovanni-Vincentelli (December, 1998). "A Framework for Comparing Models of Computation". IEEE Transactions on CAD 17 (12): 1217–1229. doi:10.1109/43.736561.
+^ Mogens Nielsen; Vladimiro Sassone and Glynn Winskel (1993). "Relationships Between Models of Concurrency". REX School/Symposium.
+^ Frederick Knabe. A Distributed Protocol for Channel-Based Communication with Choice PARLE 1992.
+^ William Clinger (June 1981). Foundations of Actor Semantics. Mathematics Doctoral Dissertation. MIT.
+^ Roscoe, Colin (2001). Modal and Temporal Properties of Processes. Springer. ISBN 0-387-98717-7.
+[edit]Further reading
+
+Lynch, Nancy A. (1996). Distributed Algorithms. Morgan Kauffman. ISBN 1-55860-348-4.
+Tanenbaum, Andrew S.; Van Steen, Maarten (2002). Distributed Systems: Principles and Paradigms. Prentice Hall. ISBN 0-13-088893-1.
+Kurki-Suonio, Reino (2005). A Practical Theory of Reactive Systems. Springer. ISBN 3-540-23342-3.
+Garg, Vijay K. (2002). Elements of Distributed Computing. Wiley-IEEE Press. ISBN 0-471-03600-5.
+Magee, Jeff;, Kramer, Jeff (2006). Concurrency: State Models and Java Programming. Wiley. ISBN 0-470-09355-2.
+[edit]External links
+
+Concurrent Systems at The WWW Virtual Library
+View page ratings
+Rate this page
+What's this?
+Trustworthy
+Objective
+Complete
+Well-written
+I am highly knowledgeable about this topic (optional)
+
+Submit ratings
+Categories: Concurrency (computer science)
+Navigation menu
+Create accountLog inArticleTalkReadEditView history
+
+Main page
+Contents
+Featured content
+Current events
+Random article
+Donate to Wikipedia
+Wikimedia Shop
+Interaction
+Help
+About Wikipedia
+Community portal
+Recent changes
+Contact Wikipedia
+Toolbox
+Print/export
+Languages
+বাংলা
+Deutsch
+Ελληνικά
+فارسی
+Italiano
+Bahasa Melayu
+日本語
+Português
+Română
+Русский
+Shqip
+Українська
+Tiếng Việt
+中文
+Edit links
+This page was last modified on 25 February 2013 at 17:39.
+Text is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply. See Terms of Use for details.
+Wikipedia® is a registered trademark of the Wikimedia Foundation, Inc., a non-profit organization.
+Contact us
+Privacy policyAbout WikipediaDisclaimersMobile view 

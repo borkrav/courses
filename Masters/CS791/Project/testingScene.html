@@ -1,0 +1,118 @@
+<html>
+<head>
+    <title>My first Three.js app</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <script src="three.min.js"></script>
+    <script src="TrackballControls.js"></script>
+    <script>
+        var scene = new THREE.Scene();
+
+        width = 800
+        height = 600
+
+        var camera = new THREE.OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 1, 1000);
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(width, height);
+        renderer.setClearColor(0x888888, 1);
+        document.body.appendChild(renderer.domElement);
+        var controls = new THREE.TrackballControls(camera);
+        function generateObject(p1, p2) {
+            var totalGeo = new THREE.Geometry()
+            var radius = 50
+            var height = 100
+
+            var len = p1.distanceTo(p2)
+            //alert(len)
+
+            var cylinder = new THREE.Mesh(new THREE.CylinderGeometry(0, radius, height, 10, 0), new THREE.MeshNormalMaterial());
+            var cylinder2 = new THREE.Mesh(new THREE.CylinderGeometry(0, radius, height, 10, 0), new THREE.MeshNormalMaterial());
+            cylinder.rotation.x = Math.PI / 2
+            cylinder.position.x = 0
+            cylinder.position.y = 0
+            cylinder.position.z = -height / 2
+            cylinder2.rotation.x = Math.PI / 2
+            cylinder2.position.x = len
+            cylinder2.position.y = 0
+            cylinder2.position.z = -height / 2
+            var squareGeometry = new THREE.Geometry();
+            squareGeometry.vertices.push(new THREE.Vector3(0, 0, 0.0));
+            squareGeometry.vertices.push(new THREE.Vector3(0, radius, -height));
+            squareGeometry.vertices.push(new THREE.Vector3(len, radius, -height));
+            squareGeometry.vertices.push(new THREE.Vector3(len, 0, 0.0));
+            squareGeometry.faces.push(new THREE.Face3(0, 1, 2));
+            squareGeometry.faces.push(new THREE.Face3(0, 2, 3));
+            squareGeometry.computeFaceNormals();
+            var squareMaterial = new THREE.MeshBasicMaterial({ color: 0xFF0000, side: THREE.DoubleSide });
+            var squareMesh = new THREE.Mesh(squareGeometry, squareMaterial);
+            var squareMesh2 = new THREE.Mesh(squareGeometry, squareMaterial);
+            squareMesh2.rotation.z = Math.PI
+            squareMesh2.position.x = len
+            cylinder.updateMatrix();
+            cylinder2.updateMatrix();
+            squareMesh.updateMatrix();
+            squareMesh2.updateMatrix();
+            totalGeo.merge(cylinder.geometry, cylinder.matrix);
+            totalGeo.merge(cylinder2.geometry, cylinder2.matrix);
+            totalGeo.merge(squareMesh.geometry, squareMesh.matrix);
+            totalGeo.merge(squareMesh2.geometry, squareMesh2.matrix);
+            var totalMesh = new THREE.Mesh(totalGeo, new THREE.MeshNormalMaterial({ side: THREE.DoubleSide, wireframe:true }))
+
+            if (p1.y <= p2.y && p1.x <= p2.x) {
+                totalMesh.position.x = p1.x
+                totalMesh.position.y = p1.y
+                totalMesh.rotation.z = Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+            if (p1.y >= p2.y && p1.x <= p2.x) {
+                totalMesh.position.x = p1.x
+                totalMesh.position.y = p1.y
+                totalMesh.rotation.z = -Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+            if (p1.y >= p2.y && p1.x >= p2.x) {
+                totalMesh.position.x = p2.x
+                totalMesh.position.y = p2.y
+                totalMesh.rotation.z = Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+            if (p1.y <= p2.y && p1.x >= p2.x) {
+                totalMesh.position.x = p2.x
+                totalMesh.position.y = p2.y
+                totalMesh.rotation.z = -Math.atan2(Math.abs(p1.y - p2.y), Math.abs(p1.x - p2.x))
+            }
+            return totalMesh
+        }
+
+        p1 = new THREE.Vector3(0, 200, 0)
+        p2 = new THREE.Vector3(60, 0, 0)
+        //draw line
+        var lineGeometry = new THREE.Geometry();
+        lineGeometry.vertices.push(p1);
+        lineGeometry.vertices.push(p2);
+        var material = new THREE.LineBasicMaterial({
+            color: 0x0000ff
+        });
+
+
+        var line = new THREE.Line(lineGeometry, material);
+        scene.add(line);
+        mesh = generateObject(p1, p2)
+        scene.add(mesh)
+        camera.position.z = 500;
+        var render = function () {
+            controls.update();
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        };
+        render();
+    </script>
+</body>
+</html>

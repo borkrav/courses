@@ -1,0 +1,289 @@
+77
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+a
+b
+c
+d
+e
+f
+g
+h
+i
+j
+k
+l
+m
+n
+o
+p
+q
+r
+s
+t
+u
+v
+w
+x
+y
+z
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+M
+N
+O
+P
+Q
+R
+S
+T
+U
+V
+W
+X
+Y
+Z
++
+-
+*
+/
+%
+=
+!
+<
+>
+(
+)
+{
+}
+,
+;
+24
+start
+zero
+ID
+INTa
+INTb
+becomes
+eq
+Neq
+nEQ
+lt
+mt
+ltEQ
+mtEQ
+plus
+minus
+times
+divide
+percent
+comma
+semicolon
+lparen
+rparen
+lbrace
+rbrace
+start
+22
+zero
+ID
+INTa
+INTb
+becomes
+eq
+nEQ
+lt
+mt
+ltEQ
+mtEQ
+plus
+minus
+times
+divide
+percent
+comma
+semicolon
+lparen
+rparen
+lbrace
+rbrace
+160
+start = becomes
+becomes = eq
+start ! Neq
+Neq = nEQ
+start < lt
+start > mt
+lt = ltEQ
+mt = mtEQ
+start + plus
+start - minus
+start * times
+start / divide
+start , comma
+start ; semicolon
+start ( lparen
+start ) rparen
+start { lbrace
+start } rbrace
+start 0 zero
+start 1 INTa
+start 2 INTa
+start 3 INTa
+start 4 INTa
+start 5 INTa
+start 6 INTa
+start 7 INTa
+start 8 INTa
+start 9 INTa
+INTa 0 INTb
+INTa 1 INTb
+INTa 2 INTb
+INTa 3 INTb
+INTa 4 INTb
+INTa 5 INTb
+INTa 6 INTb
+INTa 7 INTb
+INTa 8 INTb
+INTa 9 INTb
+INTb 0 INTb
+INTb 1 INTb
+INTb 2 INTb
+INTb 3 INTb
+INTb 4 INTb
+INTb 5 INTb
+INTb 6 INTb
+INTb 7 INTb
+INTb 8 INTb
+INTb 9 INTb
+start a ID
+start b ID
+start c ID
+start d ID
+start e ID
+start f ID
+start g ID
+start h ID
+start i ID
+start j ID
+start k ID
+start l ID
+start m ID
+start n ID
+start o ID
+start p ID
+start q ID
+start r ID
+start s ID
+start t ID
+start u ID
+start v ID
+start w ID
+start x ID
+start y ID
+start z ID
+start A ID
+start B ID
+start C ID
+start D ID
+start E ID
+start F ID
+start G ID
+start H ID
+start I ID
+start J ID
+start K ID
+start L ID
+start M ID
+start N ID
+start P ID
+start Q ID
+start R ID
+start S ID
+start T ID
+start U ID
+start V ID
+start W ID
+start X ID
+start Y ID
+start Z ID
+ID a ID
+ID b ID
+ID c ID
+ID d ID
+ID e ID
+ID f ID
+ID g ID
+ID h ID
+ID i ID
+ID j ID
+ID k ID
+ID l ID
+ID m ID
+ID n ID
+ID o ID
+ID p ID
+ID q ID
+ID r ID
+ID s ID
+ID t ID
+ID u ID
+ID v ID
+ID w ID
+ID x ID
+ID y ID
+ID z ID
+ID A ID
+ID B ID
+ID C ID
+ID D ID
+ID E ID
+ID F ID
+ID G ID
+ID H ID
+ID I ID
+ID J ID
+ID K ID
+ID L ID
+ID M ID
+ID N ID
+ID P ID
+ID Q ID
+ID R ID
+ID S ID
+ID T ID
+ID U ID
+ID V ID
+ID W ID
+ID X ID
+ID Y ID
+ID Z ID
+ID 0 ID
+ID 1 ID
+ID 2 ID
+ID 3 ID
+ID 4 ID
+ID 5 ID
+ID 6 ID
+ID 7 ID
+ID 8 ID
+ID 9 ID
+0

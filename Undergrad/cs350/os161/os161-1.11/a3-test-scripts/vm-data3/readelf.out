@@ -1,0 +1,479 @@
+ELF Header:
+  Magic:   7f 45 4c 46 01 02 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, big endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           MIPS R3000
+  Version:                           0x1
+  Entry point address:               0x4000b0
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          491204 (bytes into file)
+  Flags:                             0x1001, noreorder, o32, mips1
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         3
+  Size of section headers:           40 (bytes)
+  Number of section headers:         13
+  Section header string table index: 10
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .reginfo          MIPS_REGINFO    00400094 000094 000018 18   A  0   0  4
+  [ 2] .text             PROGBITS        004000b0 0000b0 074dd0 00  AX  0   0 16
+  [ 3] .rodata           PROGBITS        00474e80 074e80 000120 00   A  0   0 16
+  [ 4] .data             PROGBITS        10000000 075000 000000 00  WA  0   0 16
+  [ 5] .sbss             NOBITS          10000000 075000 000008 00 WAp  0   0  4
+  [ 6] .bss              NOBITS          10000010 075008 080000 00  WA  0   0 16
+  [ 7] .comment          PROGBITS        00000000 075008 0000fc 00      0   0  1
+  [ 8] .pdr              PROGBITS        00000000 075104 002d60 00      0   0  4
+  [ 9] .mdebug.abi32     PROGBITS        00000000 077e64 000000 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 077e64 00005f 00      0   0  1
+  [11] .symtab           SYMTAB          00000000 0780cc 001a00 10     12  37  4
+  [12] .strtab           STRTAB          00000000 079acc 000d86 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings)
+  I (info), L (link order), G (group), x (unknown)
+  O (extra OS processing required) o (OS specific), p (processor specific)
+
+Program Headers:
+  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
+  REGINFO        0x000094 0x00400094 0x00400094 0x00018 0x00018 R   0x4
+  LOAD           0x000000 0x00400000 0x00400000 0x74fa0 0x74fa0 R E 0x1000
+  LOAD           0x075000 0x10000000 0x10000000 0x00000 0x80010 RW  0x1000
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     .reginfo 
+   01     .reginfo .text .rodata 
+   02     .sbss .bss 
+
+There is no dynamic segment in this file.
+
+There are no relocations in this file.
+
+There are no unwind sections in this file.
+
+Symbol table '.symtab' contains 416 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 00400094     0 SECTION LOCAL  DEFAULT    1 
+     2: 004000b0     0 SECTION LOCAL  DEFAULT    2 
+     3: 00474e80     0 SECTION LOCAL  DEFAULT    3 
+     4: 10000000     0 SECTION LOCAL  DEFAULT    4 
+     5: 10000000     0 SECTION LOCAL  DEFAULT    5 
+     6: 10000010     0 SECTION LOCAL  DEFAULT    6 
+     7: 00000000     0 SECTION LOCAL  DEFAULT    7 
+     8: 00000000     0 SECTION LOCAL  DEFAULT    8 
+     9: 00000000     0 SECTION LOCAL  DEFAULT    9 
+    10: 00000000     0 SECTION LOCAL  DEFAULT   10 
+    11: 00000000     0 SECTION LOCAL  DEFAULT   11 
+    12: 00000000     0 SECTION LOCAL  DEFAULT   12 
+    13: 00000000     0 FILE    LOCAL  DEFAULT  ABS mips-crt0.S
+    14: 00000000     0 FILE    LOCAL  DEFAULT  ABS /home/brecht/cs350-os161/
+    15: 00000000     0 FILE    LOCAL  DEFAULT  ABS mips-crt0.S
+    16: 00000000     0 FILE    LOCAL  DEFAULT  ABS /home/brecht/cs350-os161/
+    17: 00000000     0 FILE    LOCAL  DEFAULT  ABS mips-crt0.S
+    18: 00000000     0 FILE    LOCAL  DEFAULT  ABS <command line>
+    19: 00000000     0 FILE    LOCAL  DEFAULT  ABS <built-in>
+    20: 00000000     0 FILE    LOCAL  DEFAULT  ABS mips-crt0.S
+    21: 00000000     0 FILE    LOCAL  DEFAULT  ABS vm-data3.c
+    22: 00000000     0 FILE    LOCAL  DEFAULT  ABS funcs.c
+    23: 00000000     0 FILE    LOCAL  DEFAULT  ABS printf.c
+    24: 00474260     0 FUNC    LOCAL  DEFAULT    2 __printf_send
+    25: 00000000     0 FILE    LOCAL  DEFAULT  ABS putchar.c
+    26: 00000000     0 FILE    LOCAL  DEFAULT  ABS puts.c
+    27: 00000000     0 FILE    LOCAL  DEFAULT  ABS errno.c
+    28: 00000000     0 FILE    LOCAL  DEFAULT  ABS exit.c
+    29: 00000000     0 FILE    LOCAL  DEFAULT  ABS syscalls.S
+    30: 00000000     0 FILE    LOCAL  DEFAULT  ABS /home/brecht/cs350-os161/
+    31: 00000000     0 FILE    LOCAL  DEFAULT  ABS syscalls.S
+    32: 00000000     0 FILE    LOCAL  DEFAULT  ABS /home/brecht/cs350-os161/
+    33: 00000000     0 FILE    LOCAL  DEFAULT  ABS syscalls.S
+    34: 00000000     0 FILE    LOCAL  DEFAULT  ABS <command line>
+    35: 00000000     0 FILE    LOCAL  DEFAULT  ABS <built-in>
+    36: 00000000     0 FILE    LOCAL  DEFAULT  ABS syscalls.S
+    37: 004743e0     0 FUNC    LOCAL  DEFAULT    2 __syscall
+    38: 00000000     0 FILE    LOCAL  DEFAULT  ABS __printf.c
+    39: 00474510     0 FUNC    LOCAL  DEFAULT    2 __pf_print
+    40: 00474554     0 FUNC    LOCAL  DEFAULT    2 __pf_endfield
+    41: 00474584     0 FUNC    LOCAL  DEFAULT    2 __pf_modifier
+    42: 00474694     0 FUNC    LOCAL  DEFAULT    2 __pf_getnum
+    43: 00474748     0 FUNC    LOCAL  DEFAULT    2 __pf_setbase
+    44: 004747b4     0 FUNC    LOCAL  DEFAULT    2 __pf_fill
+    45: 00474808     0 FUNC    LOCAL  DEFAULT    2 __pf_printstuff
+    46: 0047496c     0 FUNC    LOCAL  DEFAULT    2 __pf_printnum
+    47: 00474a2c     0 FUNC    LOCAL  DEFAULT    2 __pf_send
+    48: 00000000     0 FILE    LOCAL  DEFAULT  ABS strchr.c
+    49: 00000000     0 FILE    LOCAL  DEFAULT  ABS strlen.c
+    50: 00000000     0 FILE    LOCAL  DEFAULT  ABS __assert.c
+    51: 00000000     0 FILE    LOCAL  DEFAULT  ABS __puts.c
+    52: 00000000     0 FILE    LOCAL  DEFAULT  ABS abort.c
+    53: 00000000     0 FILE    LOCAL  DEFAULT  ABS snprintf.c
+    54: 00474d90     0 FUNC    LOCAL  DEFAULT    2 __snprintf_send
+    55: 0040f218     0 FUNC    GLOBAL DEFAULT    2 func_39
+    56: 00447b10     0 FUNC    GLOBAL DEFAULT    2 func_186
+    57: 00439748     0 FUNC    GLOBAL DEFAULT    2 func_149
+    58: 00474320     0 FUNC    GLOBAL DEFAULT    2 putchar
+    59: 00417360     0 FUNC    GLOBAL DEFAULT    2 func_60
+    60: 0044b8a0     0 FUNC    GLOBAL DEFAULT    2 func_196
+    61: 00445c48     0 FUNC    GLOBAL DEFAULT    2 func_181
+    62: 00445620     0 FUNC    GLOBAL DEFAULT    2 func_180
+    63: 00437880     0 FUNC    GLOBAL DEFAULT    2 func_144
+    64: 00437258     0 FUNC    GLOBAL DEFAULT    2 func_143
+    65: 004294b8     0 FUNC    GLOBAL DEFAULT    2 func_107
+    66: 00428e90     0 FUNC    GLOBAL DEFAULT    2 func_106
+    67: 0044ac50     0 FUNC    GLOBAL DEFAULT    2 func_194
+    68: 0043d4d8     0 FUNC    GLOBAL DEFAULT    2 func_159
+    69: 00406480     0 FUNC    GLOBAL DEFAULT    2 func_16
+    70: 00468030     0 FUNC    GLOBAL DEFAULT    2 func_270
+    71: 0045b508     0 FUNC    GLOBAL DEFAULT    2 func_237
+    72: 0045c780     0 FUNC    GLOBAL DEFAULT    2 func_240
+    73: 0044f008     0 FUNC    GLOBAL DEFAULT    2 func_205
+    74: 00410ab8     0 FUNC    GLOBAL DEFAULT    2 func_43
+    75: 0047441c     0 FUNC    GLOBAL DEFAULT    2 waitpid
+    76: 00474464     0 FUNC    GLOBAL DEFAULT    2 ioctl
+    77: 0040a210     0 FUNC    GLOBAL DEFAULT    2 func_26
+    78: 00474d20     0 FUNC    GLOBAL DEFAULT    2 __puts
+    79: 0042ad58     0 FUNC    GLOBAL DEFAULT    2 func_111
+    80: 0042a730     0 FUNC    GLOBAL DEFAULT    2 func_110
+    81: 0041aac8     0 FUNC    GLOBAL DEFAULT    2 func_69
+    82: 004642a0     0 FUNC    GLOBAL DEFAULT    2 func_260
+    83: 00456b28     0 FUNC    GLOBAL DEFAULT    2 func_225
+    84: 004742c0     0 FUNC    GLOBAL DEFAULT    2 printf
+    85: 004499d8     0 FUNC    GLOBAL DEFAULT    2 func_191
+    86: 0043c260     0 FUNC    GLOBAL DEFAULT    2 func_156
+    87: 10000000     0 NOTYPE  GLOBAL DEFAULT    4 _fdata
+    88: 00412358     0 FUNC    GLOBAL DEFAULT    2 func_47
+    89: 00460510     0 FUNC    GLOBAL DEFAULT    2 func_250
+    90: 00452148     0 FUNC    GLOBAL DEFAULT    2 func_213
+    91: 00472668     0 FUNC    GLOBAL DEFAULT    2 func_297
+    92: 00411708     0 FUNC    GLOBAL DEFAULT    2 func_45
+    93: 0043fff0     0 FUNC    GLOBAL DEFAULT    2 func_166
+    94: 00425100     0 FUNC    GLOBAL DEFAULT    2 func_96
+    95: 00407d20     0 FUNC    GLOBAL DEFAULT    2 func_20
+    96: 00443d80     0 FUNC    GLOBAL DEFAULT    2 func_176
+    97: 00443758     0 FUNC    GLOBAL DEFAULT    2 func_175
+    98: 00434d68     0 FUNC    GLOBAL DEFAULT    2 func_137
+    99: 00434740     0 FUNC    GLOBAL DEFAULT    2 func_136
+   100: 00466168     0 FUNC    GLOBAL DEFAULT    2 func_265
+   101: 00456500     0 FUNC    GLOBAL DEFAULT    2 func_224
+   102: 00474e58     0 FUNC    GLOBAL DEFAULT    2 snprintf
+   103: 00450ed0     0 FUNC    GLOBAL DEFAULT    2 func_210
+   104: 00451b20     0 FUNC    GLOBAL DEFAULT    2 func_212
+   105: 0040bab0     0 FUNC    GLOBAL DEFAULT    2 func_30
+   106: 0040cd28     0 FUNC    GLOBAL DEFAULT    2 func_33
+   107: 00461160     0 FUNC    GLOBAL DEFAULT    2 func_252
+   108: 00452d98     0 FUNC    GLOBAL DEFAULT    2 func_215
+   109: 0043a398     0 FUNC    GLOBAL DEFAULT    2 func_151
+   110: 0042cc20     0 FUNC    GLOBAL DEFAULT    2 func_116
+   111: 0041cfb8     0 FUNC    GLOBAL DEFAULT    2 func_75
+   112: 004743b0     0 FUNC    GLOBAL DEFAULT    2 __exit_hack
+   113: 00436608     0 FUNC    GLOBAL DEFAULT    2 func_141
+   114: 00428240     0 FUNC    GLOBAL DEFAULT    2 func_104
+   115: 004692a8     0 FUNC    GLOBAL DEFAULT    2 func_273
+   116: 0044d140     0 FUNC    GLOBAL DEFAULT    2 func_200
+   117: 00402d18     0 FUNC    GLOBAL DEFAULT    2 func_7
+   118: 0041dc08     0 FUNC    GLOBAL DEFAULT    2 func_77
+   119: 10000000     4 OBJECT  GLOBAL DEFAULT    5 errno
+   120: 0046f528     0 FUNC    GLOBAL DEFAULT    2 func_289
+   121: 004744ec     0 FUNC    GLOBAL DEFAULT    2 __getcwd
+   122: 10007ff0     0 NOTYPE  GLOBAL DEFAULT  ABS _gp
+   123: 00418c00     0 FUNC    GLOBAL DEFAULT    2 func_64
+   124: 0047445c     0 FUNC    GLOBAL DEFAULT    2 getpid
+   125: 00425728     0 FUNC    GLOBAL DEFAULT    2 func_97
+   126: 00468c80     0 FUNC    GLOBAL DEFAULT    2 func_272
+   127: 0045c158     0 FUNC    GLOBAL DEFAULT    2 func_239
+   128: 00414848     0 FUNC    GLOBAL DEFAULT    2 func_53
+   129: 00423238     0 FUNC    GLOBAL DEFAULT    2 func_91
+   130: 00415ac0     0 FUNC    GLOBAL DEFAULT    2 func_56
+   131: 00400e50     0 FUNC    GLOBAL DEFAULT    2 func_2
+   132: 0046d660     0 FUNC    GLOBAL DEFAULT    2 func_284
+   133: 0045e648     0 FUNC    GLOBAL DEFAULT    2 func_245
+   134: 0043f3a0     0 FUNC    GLOBAL DEFAULT    2 func_164
+   135: 00423e88     0 FUNC    GLOBAL DEFAULT    2 func_93
+   136: 00416710     0 FUNC    GLOBAL DEFAULT    2 func_58
+   137: 004309b0     0 FUNC    GLOBAL DEFAULT    2 func_126
+   138: 00430388     0 FUNC    GLOBAL DEFAULT    2 func_125
+   139: 004744cc     0 FUNC    GLOBAL DEFAULT    2 readlink
+   140: 00412980     0 FUNC    GLOBAL DEFAULT    2 func_48
+   141: 00421998     0 FUNC    GLOBAL DEFAULT    2 func_87
+   142: 00474370     0 FUNC    GLOBAL DEFAULT    2 puts
+   143: 004744d4     0 FUNC    GLOBAL DEFAULT    2 dup2
+   144: 004449d0     0 FUNC    GLOBAL DEFAULT    2 func_178
+   145: 004359b8     0 FUNC    GLOBAL DEFAULT    2 func_139
+   146: 0047448c     0 FUNC    GLOBAL DEFAULT    2 remove
+   147: 0040f840     0 FUNC    GLOBAL DEFAULT    2 func_40
+   148: 0046b798     0 FUNC    GLOBAL DEFAULT    2 func_279
+   149: 0046d038     0 FUNC    GLOBAL DEFAULT    2 func_283
+   150: 0045e020     0 FUNC    GLOBAL DEFAULT    2 func_244
+   151: 004508a8     0 FUNC    GLOBAL DEFAULT    2 func_209
+   152: 0046ab48     0 FUNC    GLOBAL DEFAULT    2 func_277
+   153: 00409be8     0 FUNC    GLOBAL DEFAULT    2 func_25
+   154: 00474de8     0 FUNC    GLOBAL DEFAULT    2 vsnprintf
+   155: 00448760     0 FUNC    GLOBAL DEFAULT    2 func_188
+   156: 00408f98     0 FUNC    GLOBAL DEFAULT    2 func_23
+   157: 00441890     0 FUNC    GLOBAL DEFAULT    2 func_170
+   158: 00432878     0 FUNC    GLOBAL DEFAULT    2 func_131
+   159: 00459c68     0 FUNC    GLOBAL DEFAULT    2 func_233
+   160: 004744ac     0 FUNC    GLOBAL DEFAULT    2 rmdir
+   161: 0043b610     0 FUNC    GLOBAL DEFAULT    2 func_154
+   162: 0043afe8     0 FUNC    GLOBAL DEFAULT    2 func_153
+   163: 0042de98     0 FUNC    GLOBAL DEFAULT    2 func_119
+   164: 0042d870     0 FUNC    GLOBAL DEFAULT    2 func_118
+   165: 00403f90     0 FUNC    GLOBAL DEFAULT    2 func_10
+   166: 00405208     0 FUNC    GLOBAL DEFAULT    2 func_13
+   167: 0042e4c0     0 FUNC    GLOBAL DEFAULT    2 func_120
+   168: 0047447c     0 FUNC    GLOBAL DEFAULT    2 ftruncate
+   169: 0045a290     0 FUNC    GLOBAL DEFAULT    2 func_234
+   170: 00466790     0 FUNC    GLOBAL DEFAULT    2 func_266
+   171: 00467a08     0 FUNC    GLOBAL DEFAULT    2 func_269
+   172: 0044dd90     0 FUNC    GLOBAL DEFAULT    2 func_202
+   173: 00401aa0     0 FUNC    GLOBAL DEFAULT    2 func_4
+   174: 00423860     0 FUNC    GLOBAL DEFAULT    2 func_92
+   175: 004160e8     0 FUNC    GLOBAL DEFAULT    2 func_57
+   176: 0040c0d8     0 FUNC    GLOBAL DEFAULT    2 func_31
+   177: 0047446c     0 FUNC    GLOBAL DEFAULT    2 lseek
+   178: 00472040     0 FUNC    GLOBAL DEFAULT    2 func_296
+   179: 00463c78     0 FUNC    GLOBAL DEFAULT    2 func_259
+   180: 004244b0     0 FUNC    GLOBAL DEFAULT    2 func_94
+   181: 00416d38     0 FUNC    GLOBAL DEFAULT    2 func_59
+   182: 004738e0     0 FUNC    GLOBAL DEFAULT    2 call_all
+   183: 00474d80     0 FUNC    GLOBAL DEFAULT    2 abort
+   184: 00446898     0 FUNC    GLOBAL DEFAULT    2 func_183
+   185: 00446270     0 FUNC    GLOBAL DEFAULT    2 func_182
+   186: 004384d0     0 FUNC    GLOBAL DEFAULT    2 func_146
+   187: 00437ea8     0 FUNC    GLOBAL DEFAULT    2 func_145
+   188: 0042a108     0 FUNC    GLOBAL DEFAULT    2 func_109
+   189: 00429ae0     0 FUNC    GLOBAL DEFAULT    2 func_108
+   190: 0044c4f0     0 FUNC    GLOBAL DEFAULT    2 func_198
+   191: 0041b718     0 FUNC    GLOBAL DEFAULT    2 func_71
+   192: 0041c990     0 FUNC    GLOBAL DEFAULT    2 func_74
+   193: 004070d0     0 FUNC    GLOBAL DEFAULT    2 func_18
+   194: 00408970     0 FUNC    GLOBAL DEFAULT    2 func_22
+   195: 00474bc0     0 FUNC    GLOBAL DEFAULT    2 __vprintf
+   196: 004744dc     0 FUNC    GLOBAL DEFAULT    2 pipe
+   197: 0041d5e0     0 FUNC    GLOBAL DEFAULT    2 func_76
+   198: 00425d50     0 FUNC    GLOBAL DEFAULT    2 func_98
+   199: 0042b380     0 FUNC    GLOBAL DEFAULT    2 func_112
+   200: 00464ef0     0 FUNC    GLOBAL DEFAULT    2 func_262
+   201: 00457778     0 FUNC    GLOBAL DEFAULT    2 func_227
+   202: 00474494     0 FUNC    GLOBAL DEFAULT    2 rename
+   203: 0044b278     0 FUNC    GLOBAL DEFAULT    2 func_195
+   204: 0044a628     0 FUNC    GLOBAL DEFAULT    2 func_193
+   205: 0043ceb0     0 FUNC    GLOBAL DEFAULT    2 func_158
+   206: 004225e8     0 FUNC    GLOBAL DEFAULT    2 func_89
+   207: 004732b8     0 FUNC    GLOBAL DEFAULT    2 func_299
+   208: 00412fa8     0 FUNC    GLOBAL DEFAULT    2 func_49
+   209: 00474434     0 FUNC    GLOBAL DEFAULT    2 write
+   210: 00440c40     0 FUNC    GLOBAL DEFAULT    2 func_168
+   211: 0040ae60     0 FUNC    GLOBAL DEFAULT    2 func_28
+   212: 00474484     0 FUNC    GLOBAL DEFAULT    2 fstat
+   213: 004443a8     0 FUNC    GLOBAL DEFAULT    2 func_177
+   214: 00435390     0 FUNC    GLOBAL DEFAULT    2 func_138
+   215: 00413bf8     0 FUNC    GLOBAL DEFAULT    2 func_51
+   216: 00414e70     0 FUNC    GLOBAL DEFAULT    2 func_54
+   217: 004648c8     0 FUNC    GLOBAL DEFAULT    2 func_261
+   218: 00457150     0 FUNC    GLOBAL DEFAULT    2 func_226
+   219: 00460b38     0 FUNC    GLOBAL DEFAULT    2 func_251
+   220: 00452770     0 FUNC    GLOBAL DEFAULT    2 func_214
+   221: 004742ec     0 FUNC    GLOBAL DEFAULT    2 vprintf
+   222: 00474444     0 FUNC    GLOBAL DEFAULT    2 reboot
+   223: 0040c700     0 FUNC    GLOBAL DEFAULT    2 func_32
+   224: 004744b4     0 FUNC    GLOBAL DEFAULT    2 chdir
+   225: 0040d978     0 FUNC    GLOBAL DEFAULT    2 func_35
+   226: 004000b0     0 FUNC    GLOBAL DEFAULT    2 __start
+   227: 00470178     0 FUNC    GLOBAL DEFAULT    2 func_291
+   228: 00461db0     0 FUNC    GLOBAL DEFAULT    2 func_254
+   229: 004539e8     0 FUNC    GLOBAL DEFAULT    2 func_217
+   230: 0042b9a8     0 FUNC    GLOBAL DEFAULT    2 func_113
+   231: 0043f9c8     0 FUNC    GLOBAL DEFAULT    2 func_165
+   232: 00405e58     0 FUNC    GLOBAL DEFAULT    2 func_15
+   233: 00426fc8     0 FUNC    GLOBAL DEFAULT    2 func_101
+   234: 00424ad8     0 FUNC    GLOBAL DEFAULT    2 func_95
+   235: 00403340     0 FUNC    GLOBAL DEFAULT    2 func_8
+   236: 0046ef00     0 FUNC    GLOBAL DEFAULT    2 func_288
+   237: 0045fee8     0 FUNC    GLOBAL DEFAULT    2 func_249
+   238: 00455288     0 FUNC    GLOBAL DEFAULT    2 func_221
+   239: 00421fc0     0 FUNC    GLOBAL DEFAULT    2 func_88
+   240: 004026f0     0 FUNC    GLOBAL DEFAULT    2 func_6
+   241: 0046fb50     0 FUNC    GLOBAL DEFAULT    2 func_290
+   242: 00461788     0 FUNC    GLOBAL DEFAULT    2 func_253
+   243: 004533c0     0 FUNC    GLOBAL DEFAULT    2 func_216
+   244: 00400100     0 FUNC    GLOBAL DEFAULT    2 write_data
+   245: 004000b0     0 NOTYPE  GLOBAL DEFAULT    2 _ftext
+   246: 004744fc     0 FUNC    GLOBAL DEFAULT    2 lstat
+   247: 004698d0     0 FUNC    GLOBAL DEFAULT    2 func_274
+   248: 0044d768     0 FUNC    GLOBAL DEFAULT    2 func_201
+   249: 0047442c     0 FUNC    GLOBAL DEFAULT    2 read
+   250: 004110e0     0 FUNC    GLOBAL DEFAULT    2 func_44
+   251: 00454c60     0 FUNC    GLOBAL DEFAULT    2 func_220
+   252: 0046e2b0     0 FUNC    GLOBAL DEFAULT    2 func_286
+   253: 0045f298     0 FUNC    GLOBAL DEFAULT    2 func_247
+   254: 0046bdc0     0 FUNC    GLOBAL DEFAULT    2 func_280
+   255: 0045cda8     0 FUNC    GLOBAL DEFAULT    2 func_241
+   256: 0044f630     0 FUNC    GLOBAL DEFAULT    2 func_206
+   257: 0043e128     0 FUNC    GLOBAL DEFAULT    2 func_161
+   258: 0043db00     0 FUNC    GLOBAL DEFAULT    2 func_160
+   259: 00431600     0 FUNC    GLOBAL DEFAULT    2 func_128
+   260: 00430fd8     0 FUNC    GLOBAL DEFAULT    2 func_127
+   261: 00420720     0 FUNC    GLOBAL DEFAULT    2 func_84
+   262: 10000004     4 OBJECT  GLOBAL DEFAULT    5 __argv
+   263: 00400140     0 FUNC    GLOBAL DEFAULT    2 read_data
+   264: 00432250     0 FUNC    GLOBAL DEFAULT    2 func_130
+   265: 0047444c     0 FUNC    GLOBAL DEFAULT    2 sync
+   266: 00400828     0 FUNC    GLOBAL DEFAULT    2 func_1
+   267: 004589f0     0 FUNC    GLOBAL DEFAULT    2 func_230
+   268: 00417988     0 FUNC    GLOBAL DEFAULT    2 func_61
+   269: 0041c368     0 FUNC    GLOBAL DEFAULT    2 func_73
+   270: 0046dc88     0 FUNC    GLOBAL DEFAULT    2 func_285
+   271: 0045ec70     0 FUNC    GLOBAL DEFAULT    2 func_246
+   272: 0046a520     0 FUNC    GLOBAL DEFAULT    2 func_276
+   273: 004744bc     0 FUNC    GLOBAL DEFAULT    2 getdirentry
+   274: 00474414     0 FUNC    GLOBAL DEFAULT    2 fork
+   275: 00419228     0 FUNC    GLOBAL DEFAULT    2 func_65
+   276: 0047440c     0 FUNC    GLOBAL DEFAULT    2 execv
+   277: 0041bd40     0 FUNC    GLOBAL DEFAULT    2 func_72
+   278: 0040a838     0 FUNC    GLOBAL DEFAULT    2 func_27
+   279: 004424e0     0 FUNC    GLOBAL DEFAULT    2 func_172
+   280: 00441eb8     0 FUNC    GLOBAL DEFAULT    2 func_171
+   281: 004334c8     0 FUNC    GLOBAL DEFAULT    2 func_133
+   282: 00432ea0     0 FUNC    GLOBAL DEFAULT    2 func_132
+   283: 00470dc8     0 FUNC    GLOBAL DEFAULT    2 func_293
+   284: 00462a00     0 FUNC    GLOBAL DEFAULT    2 func_256
+   285: 00454638     0 FUNC    GLOBAL DEFAULT    2 func_219
+   286: 004493b0     0 FUNC    GLOBAL DEFAULT    2 func_190
+   287: 0043bc38     0 FUNC    GLOBAL DEFAULT    2 func_155
+   288: 00474454     0 FUNC    GLOBAL DEFAULT    2 sbrk
+   289: 004269a0     0 FUNC    GLOBAL DEFAULT    2 func_100
+   290: 00448138     0 FUNC    GLOBAL DEFAULT    2 func_187
+   291: 0040e5c8     0 FUNC    GLOBAL DEFAULT    2 func_37
+   292: 004744c4     0 FUNC    GLOBAL DEFAULT    2 symlink
+   293: 0042f110     0 FUNC    GLOBAL DEFAULT    2 func_122
+   294: 0042eae8     0 FUNC    GLOBAL DEFAULT    2 func_121
+   295: 0041e230     0 FUNC    GLOBAL DEFAULT    2 func_78
+   296: 10000000     0 NOTYPE  GLOBAL DEFAULT  ABS __bss_start
+   297: 004001a4     0 FUNC    GLOBAL DEFAULT    2 main
+   298: 0045aee0     0 FUNC    GLOBAL DEFAULT    2 func_236
+   299: 004673e0     0 FUNC    GLOBAL DEFAULT    2 func_268
+   300: 0044e9e0     0 FUNC    GLOBAL DEFAULT    2 func_204
+   301: 00403968     0 FUNC    GLOBAL DEFAULT    2 func_9
+   302: 0040dfa0     0 FUNC    GLOBAL DEFAULT    2 func_36
+   303: 0040d350     0 FUNC    GLOBAL DEFAULT    2 func_34
+   304: 004474e8     0 FUNC    GLOBAL DEFAULT    2 func_185
+   305: 00446ec0     0 FUNC    GLOBAL DEFAULT    2 func_184
+   306: 00439120     0 FUNC    GLOBAL DEFAULT    2 func_148
+   307: 00438af8     0 FUNC    GLOBAL DEFAULT    2 func_147
+   308: 00436c30     0 FUNC    GLOBAL DEFAULT    2 func_142
+   309: 00428868     0 FUNC    GLOBAL DEFAULT    2 func_105
+   310: 0044a000     0 FUNC    GLOBAL DEFAULT    2 func_192
+   311: 0043c888     0 FUNC    GLOBAL DEFAULT    2 func_157
+   312: 004744e4     0 FUNC    GLOBAL DEFAULT    2 __time
+   313: 0045a8b8     0 FUNC    GLOBAL DEFAULT    2 func_235
+   314: 004095c0     0 FUNC    GLOBAL DEFAULT    2 func_24
+   315: 0044e3b8     0 FUNC    GLOBAL DEFAULT    2 func_203
+   316: 0040fe68     0 FUNC    GLOBAL DEFAULT    2 func_41
+   317: 00465b40     0 FUNC    GLOBAL DEFAULT    2 func_264
+   318: 004583c8     0 FUNC    GLOBAL DEFAULT    2 func_229
+   319: 00455ed8     0 FUNC    GLOBAL DEFAULT    2 func_223
+   320: 0044bec8     0 FUNC    GLOBAL DEFAULT    2 func_197
+   321: 00419850     0 FUNC    GLOBAL DEFAULT    2 func_66
+   322: 00421370     0 FUNC    GLOBAL DEFAULT    2 func_86
+   323: 004135d0     0 FUNC    GLOBAL DEFAULT    2 func_50
+   324: 004514f8     0 FUNC    GLOBAL DEFAULT    2 func_211
+   325: 00472c90     0 FUNC    GLOBAL DEFAULT    2 func_298
+   326: 004200f8     0 FUNC    GLOBAL DEFAULT    2 func_83
+   327: 00443130     0 FUNC    GLOBAL DEFAULT    2 func_174
+   328: 00434118     0 FUNC    GLOBAL DEFAULT    2 func_135
+   329: 00422c10     0 FUNC    GLOBAL DEFAULT    2 func_90
+   330: 00415498     0 FUNC    GLOBAL DEFAULT    2 func_55
+   331: 00465518     0 FUNC    GLOBAL DEFAULT    2 func_263
+   332: 00457da0     0 FUNC    GLOBAL DEFAULT    2 func_228
+   333: 00417fb0     0 FUNC    GLOBAL DEFAULT    2 func_62
+   334: 10000010 524288 OBJECT  GLOBAL DEFAULT    6 array
+   335: 00474474     0 FUNC    GLOBAL DEFAULT    2 fsync
+   336: 00419e78     0 FUNC    GLOBAL DEFAULT    2 func_67
+   337: 0041b0f0     0 FUNC    GLOBAL DEFAULT    2 func_70
+   338: 00439d70     0 FUNC    GLOBAL DEFAULT    2 func_150
+   339: 0042c5f8     0 FUNC    GLOBAL DEFAULT    2 func_115
+   340: 0042bfd0     0 FUNC    GLOBAL DEFAULT    2 func_114
+   341: 00440618     0 FUNC    GLOBAL DEFAULT    2 func_167
+   342: 00435fe0     0 FUNC    GLOBAL DEFAULT    2 func_140
+   343: 00427c18     0 FUNC    GLOBAL DEFAULT    2 func_103
+   344: 004275f0     0 FUNC    GLOBAL DEFAULT    2 func_102
+   345: 00468658     0 FUNC    GLOBAL DEFAULT    2 func_271
+   346: 0045bb30     0 FUNC    GLOBAL DEFAULT    2 func_238
+   347: 004744f4     0 FUNC    GLOBAL DEFAULT    2 stat
+   348: 10000000     0 NOTYPE  GLOBAL DEFAULT  ABS _edata
+   349: 0040ebf0     0 FUNC    GLOBAL DEFAULT    2 func_38
+   350: 10080010     0 NOTYPE  GLOBAL DEFAULT  ABS _end
+   351: 004185d8     0 FUNC    GLOBAL DEFAULT    2 func_63
+   352: 004707a0     0 FUNC    GLOBAL DEFAULT    2 func_292
+   353: 004623d8     0 FUNC    GLOBAL DEFAULT    2 func_255
+   354: 00454010     0 FUNC    GLOBAL DEFAULT    2 func_218
+   355: 00474cd0     0 FUNC    GLOBAL DEFAULT    2 __bad_assert
+   356: 00406aa8     0 FUNC    GLOBAL DEFAULT    2 func_17
+   357: 00405830     0 FUNC    GLOBAL DEFAULT    2 func_14
+   358: 00444ff8     0 FUNC    GLOBAL DEFAULT    2 func_179
+   359: 00411d30     0 FUNC    GLOBAL DEFAULT    2 func_46
+   360: 004558b0     0 FUNC    GLOBAL DEFAULT    2 func_222
+   361: 0047449c     0 FUNC    GLOBAL DEFAULT    2 link
+   362: 004076f8     0 FUNC    GLOBAL DEFAULT    2 func_19
+   363: 00404be0     0 FUNC    GLOBAL DEFAULT    2 func_12
+   364: 0046ca10     0 FUNC    GLOBAL DEFAULT    2 func_282
+   365: 0045d9f8     0 FUNC    GLOBAL DEFAULT    2 func_243
+   366: 00450280     0 FUNC    GLOBAL DEFAULT    2 func_208
+   367: 0043ed78     0 FUNC    GLOBAL DEFAULT    2 func_163
+   368: 0043e750     0 FUNC    GLOBAL DEFAULT    2 func_162
+   369: 00431c28     0 FUNC    GLOBAL DEFAULT    2 func_129
+   370: 004743a0     0 FUNC    GLOBAL DEFAULT    2 exit
+   371: 0042fd60     0 FUNC    GLOBAL DEFAULT    2 func_124
+   372: 00408348     0 FUNC    GLOBAL DEFAULT    2 func_21
+   373: 004020c8     0 FUNC    GLOBAL DEFAULT    2 func_5
+   374: 00459640     0 FUNC    GLOBAL DEFAULT    2 func_232
+   375: 0041e858     0 FUNC    GLOBAL DEFAULT    2 func_79
+   376: 00410490     0 FUNC    GLOBAL DEFAULT    2 func_42
+   377: 0046e8d8     0 FUNC    GLOBAL DEFAULT    2 func_287
+   378: 0045f8c0     0 FUNC    GLOBAL DEFAULT    2 func_248
+   379: 00474404     0 FUNC    GLOBAL DEFAULT    2 _exit
+   380: 0046c3e8     0 FUNC    GLOBAL DEFAULT    2 func_281
+   381: 0045d3d0     0 FUNC    GLOBAL DEFAULT    2 func_242
+   382: 0044fc58     0 FUNC    GLOBAL DEFAULT    2 func_207
+   383: 00469ef8     0 FUNC    GLOBAL DEFAULT    2 func_275
+   384: 0046b170     0 FUNC    GLOBAL DEFAULT    2 func_278
+   385: 0041a4a0     0 FUNC    GLOBAL DEFAULT    2 func_68
+   386: 00474ca0     0 FUNC    GLOBAL DEFAULT    2 strlen
+   387: 00474424     0 FUNC    GLOBAL DEFAULT    2 open
+   388: 00426378     0 FUNC    GLOBAL DEFAULT    2 func_99
+   389: 0041ee80     0 FUNC    GLOBAL DEFAULT    2 func_80
+   390: 0040b488     0 FUNC    GLOBAL DEFAULT    2 func_29
+   391: 00474c40     0 FUNC    GLOBAL DEFAULT    2 strchr
+   392: 00442b08     0 FUNC    GLOBAL DEFAULT    2 func_173
+   393: 00433af0     0 FUNC    GLOBAL DEFAULT    2 func_134
+   394: 00459018     0 FUNC    GLOBAL DEFAULT    2 func_231
+   395: 00471a18     0 FUNC    GLOBAL DEFAULT    2 func_295
+   396: 00463650     0 FUNC    GLOBAL DEFAULT    2 func_258
+   397: 00420d48     0 FUNC    GLOBAL DEFAULT    2 func_85
+   398: 0043a9c0     0 FUNC    GLOBAL DEFAULT    2 func_152
+   399: 0042d248     0 FUNC    GLOBAL DEFAULT    2 func_117
+   400: 004045b8     0 FUNC    GLOBAL DEFAULT    2 func_11
+   401: 00448d88     0 FUNC    GLOBAL DEFAULT    2 func_189
+   402: 00400200     0 FUNC    GLOBAL DEFAULT    2 func_0
+   403: 0042f738     0 FUNC    GLOBAL DEFAULT    2 func_123
+   404: 0044cb18     0 FUNC    GLOBAL DEFAULT    2 func_199
+   405: 00441268     0 FUNC    GLOBAL DEFAULT    2 func_169
+   406: 10000000     0 NOTYPE  GLOBAL DEFAULT  ABS _fbss
+   407: 004744a4     0 FUNC    GLOBAL DEFAULT    2 mkdir
+   408: 0041fad0     0 FUNC    GLOBAL DEFAULT    2 func_82
+   409: 00466db8     0 FUNC    GLOBAL DEFAULT    2 func_267
+   410: 0047443c     0 FUNC    GLOBAL DEFAULT    2 close
+   411: 00414220     0 FUNC    GLOBAL DEFAULT    2 func_52
+   412: 00401478     0 FUNC    GLOBAL DEFAULT    2 func_3
+   413: 004713f0     0 FUNC    GLOBAL DEFAULT    2 func_294
+   414: 00463028     0 FUNC    GLOBAL DEFAULT    2 func_257
+   415: 0041f4a8     0 FUNC    GLOBAL DEFAULT    2 func_81
+
+No version information found in this file.

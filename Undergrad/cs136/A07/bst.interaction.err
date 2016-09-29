@@ -1,0 +1,47 @@
+HEAP SUMMARY:
+==7895==     in use at exit: 60 bytes in 5 blocks
+==7895==   total heap usage: 8 allocs, 3 frees, 96 bytes allocated
+==7895== 
+==7895== 12 bytes in 1 blocks are indirectly lost in loss record 1 of 5
+==7895==    at 0x4024C1C: malloc (vg_replace_malloc.c:195)
+==7895==    by 0x804855B: insertbst (bst.c:35)
+==7895==    by 0x80485C8: insertbst (bst.c:48)
+==7895==    by 0x80485C8: insertbst (bst.c:48)
+==7895==    by 0x80485C8: insertbst (bst.c:48)
+==7895==    by 0x804869C: main (bst.c:71)
+==7895== 
+==7895== 12 bytes in 1 blocks are indirectly lost in loss record 2 of 5
+==7895==    at 0x4024C1C: malloc (vg_replace_malloc.c:195)
+==7895==    by 0x804855B: insertbst (bst.c:35)
+==7895==    by 0x80485C8: insertbst (bst.c:48)
+==7895==    by 0x804859E: insertbst (bst.c:43)
+==7895==    by 0x804859E: insertbst (bst.c:43)
+==7895==    by 0x80486CC: main (bst.c:73)
+==7895== 
+==7895== 12 bytes in 1 blocks are definitely lost in loss record 3 of 5
+==7895==    at 0x4024C1C: malloc (vg_replace_malloc.c:195)
+==7895==    by 0x80485EC: main (bst.c:56)
+==7895== 
+==7895== 24 (12 direct, 12 indirect) bytes in 1 blocks are definitely lost in loss record 4 of 5
+==7895==    at 0x4024C1C: malloc (vg_replace_malloc.c:195)
+==7895==    by 0x804855B: insertbst (bst.c:35)
+==7895==    by 0x80485C8: insertbst (bst.c:48)
+==7895==    by 0x80485C8: insertbst (bst.c:48)
+==7895==    by 0x8048684: main (bst.c:70)
+==7895== 
+==7895== 24 (12 direct, 12 indirect) bytes in 1 blocks are definitely lost in loss record 5 of 5
+==7895==    at 0x4024C1C: malloc (vg_replace_malloc.c:195)
+==7895==    by 0x804855B: insertbst (bst.c:35)
+==7895==    by 0x804859E: insertbst (bst.c:43)
+==7895==    by 0x804859E: insertbst (bst.c:43)
+==7895==    by 0x80486B4: main (bst.c:72)
+==7895== 
+==7895== LEAK SUMMARY:
+==7895==    definitely lost: 36 bytes in 3 blocks
+==7895==    indirectly lost: 24 bytes in 2 blocks
+==7895==      possibly lost: 0 bytes in 0 blocks
+==7895==    still reachable: 0 bytes in 0 blocks
+==7895==         suppressed: 0 bytes in 0 blocks
+==7895== 
+==7895== For counts of detected and suppressed errors, rerun with: -v
+==7895== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 13 from 8)

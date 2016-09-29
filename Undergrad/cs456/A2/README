@@ -1,0 +1,22 @@
+README for A2 for CS456
+
+How to run:
+	1. Run ./nse-linux386 <router_host> <nse_port>
+	2. Run ./router 1 <nse_host> <nse_port> <router_port>
+		 ...
+		 Run ./router 5 <nse_host> <nse_port> <router_port>
+
+Program was built on:
+	linux024.student.cs.uwaterloo.ca
+
+Program was tested on:
+	Emulator running on linux032.student.cs.uwaterloo.ca
+	Routers running on linux024.student.cs.uwaterloo.ca
+
+Versions:
+	GNU Make 3.81
+	g++ (Ubuntu/Linaro 4.4.4-14ubuntu5.1) 4.4.5
+
+Notes:
+	I output my topology database in a different format then given in assignment spec
+	

@@ -1,0 +1,22 @@
+Name: Boris Kravchenko 
+Student Number: 20332359
+User-id: bkravche
+Assignment: 3
+
+The final executable was compiled on this machine: 
+gl07.student.cs.uwaterloo.ca
+
+How to invoke my program: 
+Run ./puppeteer
+
+How to use my extra features: 
+
+
+I have created the following data files, which are in the data directory:
+
+
+My program assumes the following:
+
+An immovable joint is a joint where min=max
+Joint stays selected after any of Reset All/Reset Joints
+Reset All does not reset any of the menu selections/modes
