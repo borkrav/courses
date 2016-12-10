@@ -1,0 +1,4 @@
+﻿  Problem2.cpp
+c:\users\boris\documents\github\courses\interviews\linked lists\problem2\problem2\problem2.cpp(15): warning C4091: 'typedef ': ignored on left of 'Element' when no variable is declared
+  Problem2.vcxproj -> C:\Users\boris\Documents\GitHub\courses\Interviews\Linked Lists\Problem2\Debug\Problem2.exe
+  Problem2.vcxproj -> C:\Users\boris\Documents\GitHub\courses\Interviews\Linked Lists\Problem2\Debug\Problem2.pdb (Full PDB)

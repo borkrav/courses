@@ -1,0 +1,5 @@
+﻿  Problem1.cpp
+c:\users\boris\documents\github\courses\interviews\linked lists\problem1\problem1\problem1.cpp(15): warning C4091: 'typedef ': ignored on left of 'element' when no variable is declared
+c:\users\boris\documents\github\courses\interviews\linked lists\problem1\problem1\problem1.cpp(61): warning C4101: 'exc': unreferenced local variable
+  Problem1.vcxproj -> C:\Users\boris\Documents\GitHub\courses\Interviews\Linked Lists\Problem1\Debug\Problem1.exe
+  Problem1.vcxproj -> C:\Users\boris\Documents\GitHub\courses\Interviews\Linked Lists\Problem1\Debug\Problem1.pdb (Full PDB)
