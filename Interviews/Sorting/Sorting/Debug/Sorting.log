@@ -1,0 +1,8 @@
+﻿  Sorting.cpp
+c:\users\boris\documents\github\courses\interviews\sorting\sorting\sorting.cpp(14): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\documents\github\courses\interviews\sorting\sorting\sorting.cpp(15): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\documents\github\courses\interviews\sorting\sorting\sorting.cpp(16): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\documents\github\courses\interviews\sorting\sorting\sorting.cpp(28): warning C4018: '<': signed/unsigned mismatch
+c:\users\boris\documents\github\courses\interviews\sorting\sorting\sorting.cpp(87): warning C4715: 'maximum_completed_tasks': not all control paths return a value
+  Sorting.vcxproj -> C:\Users\boris\Documents\GitHub\courses\Interviews\Sorting\Debug\Sorting.exe
+  Sorting.vcxproj -> C:\Users\boris\Documents\GitHub\courses\Interviews\Sorting\Debug\Sorting.pdb (Full PDB)
